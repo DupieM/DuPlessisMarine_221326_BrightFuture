@@ -67,7 +67,7 @@
 
 ### Project Description
 
-Interactive campaign created in response to the Pendoring Award 2025 theme: “Taal never die, We Multiply.” Partnering with Motherland Coffee Company, it celebrates South Africa’s cultural and linguistic diversity by turning the act of sharing coffee into an expression of connection and heritage. Customers can access the platform via social media adverts or in-store, translate the site into their home language, and send personalised coffee vouchers with custom digital stickers and messages in their mother tongue. Recipients receive the message along with a voucher redeemable at any Motherland Coffee store.
+...
 
 ### Built With
 
