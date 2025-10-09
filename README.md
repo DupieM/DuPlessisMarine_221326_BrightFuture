@@ -1,50 +1,238 @@
-# Welcome to your Expo app 👋
+<br />
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+![GitHub repo size](https://img.shields.io/github/repo-size/DupieM/DuPlessisMarine_221326_BrightFuture)
+![GitHub watchers](https://img.shields.io/github/watchers/DupieM/DuPlessisMarine_221326_BrightFuture)
+![GitHub language count](https://img.shields.io/github/languages/count/DupieM/DuPlessisMarine_221326_BrightFuture)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DupieM/DuPlessisMarine_221326_BrightFuture)
 
-## Get started
+<!-- HEADER SECTION -->
+<h5 align="center" style="padding:0;margin:0;">Mariné du Plessis</h5>
+<h5 align="center" style="padding:0;margin:0;">221326</h5>
+<h6 align="center">Creative Production 410 (Interactive Development)</h6>
+</br>
+<p align="center">
 
-1. Install dependencies
+  <a href="https://github.com/username/projectname">
+    <img src="readme_images/" alt="Logo" width="130" height="130">
+  </a>
+  
+  <h3 align="center">BrightFuture</h3>
 
-   ```bash
-   npm install
-   ```
+<p align="center">
+    ??<br>
+   <br />
+    <a href="https://github.com/DupieM/DuPlessisMarine_221326_BrightFuture/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/DupieM/DuPlessisMarine_221326_BrightFuture/issues">Request Feature</a>
+</p>
 
-2. Start the app
+<!-- TABLE OF CONTENTS -->
+## Table of Contents
 
-   ```bash
-   npx expo start
-   ```
+* [About the Project](#about-the-project)
+  * [Project Description](#project-description)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [How to install](#how-to-install)
+* [Features and Functionality](#features-and-functionality)
+* [Concept Process](#concept-process)
+   * [Ideation](#ideation)
+   * [Wireframes](#wireframes)
+   * [User-flow](#user-flow)
+   * [ERD](#erd-diagram)
+* [Development Process](#development-process)
+   * [Implementation Process](#implementation-process)
+        * [Highlights](#highlights)
+        * [Challenges](#challenges)
+   * [Reviews and Testing](#peer-reviews)
+        * [Reviews](#feedback-from-reviews)
+        * [Unit Tests](#unit-tests)
+        * [UAT Tests](#uat-tests)
+   * [Future Implementation](#peer-reviews)
+* [Final Outcome](#final-outcome)
+    * [Mockups](#mockups)
+    * [Video Demonstration](#video-demonstration)
+    * [Promotional Video](#promotional-video)
+* [Roadmap](#roadmap)
+* [Contributing](#contributing)
+* [License](#license)
+* [Contact](#contact)
+* [Acknowledgements](#acknowledgements)
 
-In the output, you'll find options to open the app in a
+<!--PROJECT DESCRIPTION-->
+## About the Project
+<!-- header image of project -->
+<img src="readme_images/" alt="header image" width="550px">
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Project Description
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Interactive campaign created in response to the Pendoring Award 2025 theme: “Taal never die, We Multiply.” Partnering with Motherland Coffee Company, it celebrates South Africa’s cultural and linguistic diversity by turning the act of sharing coffee into an expression of connection and heritage. Customers can access the platform via social media adverts or in-store, translate the site into their home language, and send personalised coffee vouchers with custom digital stickers and messages in their mother tongue. Recipients receive the message along with a voucher redeemable at any Motherland Coffee store.
 
-## Get a fresh project
+### Built With
 
-When you're ready, run:
+* <a href="">![Static Badge]()</a>
 
-```bash
-npm run reset-project
-```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+<!-- GETTING STARTED -->
+<!-- Make sure to add appropriate information about what prerequesite technologies the user would need and also the steps to install your project on their own mashines -->
+## Getting Started
 
-## Learn more
+The following instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-To learn more about developing your project with Expo, look at the following resources:
+### Prerequisites
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+?????
 
-## Join the community
+## How to install
 
-Join our community of developers creating universal apps.
+### Installation
+Clone the project repository as follow:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+1. Go to Github Desktop and then click on clone new repository
+
+2. Enter `https://github.com/DupieM/DuPlessisMarine_221326_BrightFuture.git` into the URL field and press the `Clone` button.
+
+To start the ...
+
+<!-- FEATURES AND FUNCTIONALITY-->
+<!-- You can add the links to all of your imagery at the bottom of the file as references -->
+## Features and Functionality
+
+![Home]()
+
+### Screen 1 - Name
+
+??
+
+</br>
+
+![Sticker]()
+
+### Screen 2 - Name
+
+???
+
+</br>
+
+![Screen 3]()
+
+### Screen 3 - Name
+
+???
+
+<!-- CONCEPT PROCESS -->
+<!-- Briefly explain your concept ideation process -->
+## Concept Process
+
+The `Conceptual Process` is the set of actions, activities and research that was done when starting this project.
+
+### Ideation
+
+<img src="readme_images/" alt="Moodboard1" width="1000px">
+
+### Planned Wireframes
+
+<img src="readme_images/" alt="Wireframe 1" width="700px">
+</br>
+<img src="readme_images/" alt="Wireframe 2" width="700px">
+</br>
+<img src="readme_images/" alt="Wireframe 3" width="700px">
+
+<!-- DEVELOPMENT PROCESS -->
+
+## Development Process
+
+The `Development Process` is the technical implementations and functionality done in the frontend and backend of the application.
+
+### Implementation Process
+<!-- stipulate all of the functionality you included in the project -->
+ 
+* `...` 
+
+#### Highlights
+<!-- stipulated the highlight you experienced with the project -->
+* ...
+
+#### Challenges
+<!-- stipulated the challenges you faced with the project and why you think you faced it or how you think you'll solve it (if not solved) -->
+* ...
+
+### Reviews & Testing
+<!-- stipulate how you've conducted testing in the form of peer reviews, feedback and also functionality testing, like unit tests (if applicable) -->
+#### Unit Tests
+
+`Unit Tests` were conducted to establish working functionality by myself.
+
+* `Test 1` of confirming ...
+* `Test 2` of confirming ...
+* `Test 3` of confirming ...
+
+#### UAT Tests
+
+`User Acceptance Testing` were conducted to establish working functionality by my peers.
+
+* `Peer One` did a unit test ...
+* `Peer TWo` did a unit test ...
+
+### Future Implementation
+<!-- stipulate functionality and improvements that can be implemented in the future. -->
+
+* ...
+
+<!-- MOCKUPS -->
+## Final Outcome
+
+### Mockups
+
+![Mockup 1](readme_images/)
+<br>
+
+![Mockup 2](readme_images/)
+<br>
+
+![Mockup 3](readme_images/)
+<br>
+
+![Mockup 4](readme_images/)
+<br>
+
+![Mockup 5](readme_images/)
+<br>
+
+<!-- ROADMAP -->
+## Roadmap
+
+See Future Implementation for a list of proposed features (and known issues).
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what makes the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<!-- AUTHORS -->
+## Authors
+
+* **Mariné du Plessis** - [username](https://github.com/DupieM)
+
+<!-- LICENSE -->
+## License
+
+BrightFuture reserved © 2025
+
+<!-- LICENSE -->
+## Contact
+
+* **Mariné du Plessis** - [email@address](221326@virtualwindow.co.za) 
+* **Project Link** - https://github.com/DupieM/DuPlessisMarine_221326_BrightFuture
+
+<!-- ACKNOWLEDGEMENTS -->
+## Acknowledgements
+<!-- all resources that you used and Acknowledgements here -->
+* [Firebase Documentation](https://firebase.google.com/docs?hl=en&authuser=1&_gl=1*oj3ulf*_ga*MTQzMDEzOTU3OS4xNzEyNTU2NTU1*_ga_CW55HF8NVT*MTcxODU1NTAxMS44NS4xLjE3MTg1NTgxMDAuNTkuMC4w)
