@@ -16,7 +16,7 @@ export default function JourneyScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">Profile</ThemedText>
         <HelloWave />
       </ThemedView>
     </ParallaxScrollView>
