@@ -9,7 +9,7 @@ export default function JourneyScreen() {
   return (
     <ParallaxScrollView>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Donar Dashboard</ThemedText>
+        <ThemedText type="title">Smailes</ThemedText>
         <View style={styles.textcontainer}>
           <Text style={styles.text}>
             <Text style={styles.hi}>Hi, I’m{'\n'}</Text>
