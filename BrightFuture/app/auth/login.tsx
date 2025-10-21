@@ -24,7 +24,7 @@ export default function LoginScreen() {
         <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#006A80" secureTextEntry />
         <Text style={styles.password}>Forgot Password?</Text>
 
-        <TouchableOpacity style={styles.signinButton} onPress={handleLogin}>
+        <TouchableOpacity style={styles.signinButton}>
           <Text style={styles.getStartedText}>Sign In</Text>
         </TouchableOpacity>
 
