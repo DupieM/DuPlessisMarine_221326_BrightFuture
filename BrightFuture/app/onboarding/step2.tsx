@@ -5,20 +5,15 @@ export default function Step2() {
   return (
     <View style={styles.container}>
 
+<View style={styles.content}>
         <Image
         source={require('../../assets/images/smiles.png')}
           style={styles.image}
         />
 
-      <Text style={styles.title}>Gratitude Messages</Text>
-       <Text style={styles.subtitle}>View messages from children showing their gratitude for you donation</Text>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Next"
-          color="#3C667B"
-          onPress={() => router.push('/onboarding/step3')}
-        />
-      </View>
+      <Text style={styles.title}>Gratitude</Text>
+       <Text style={styles.subtitle}>View motivational quotes about care, hope and childhood</Text>
+    </View>
     </View>
   );
 }
@@ -31,6 +26,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
   },
+  content: {
+    alignItems: 'center',
+    marginBottom: 130,
+  },
   image: {
     width: 120,
     height: 120,
@@ -39,13 +38,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#3C667B',
+    color: '#000000',
     marginBottom: 20,
     textAlign: 'center',
   },
     subtitle: {
     fontSize: 20,
-    color: '#3C667B',
+    color: '#000000',
     marginBottom: 20,
     textAlign: 'center',
   },

@@ -1,9 +1,9 @@
-import { View, Text, Button, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { router } from 'expo-router';
+import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
 
 export default function LoginScreen() {
   const handleLogin = () => {
-    // Add your login logic here
     router.replace('/(tabs)');
   };
 
@@ -17,113 +17,169 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign In</Text>
+      <View style={styles.content}>
+        <Text style={styles.title}>Sign In</Text>
 
-        <TextInput style={styles.input} placeholder='Username' />
-        <TextInput style={styles.input} placeholder='Password' />
-        <Text style={styles.password}>
-        Forgot Password?
-        </Text>
+        <TextInput style={styles.input} placeholder="Username" placeholderTextColor="#006A80" />
+        <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#006A80" secureTextEntry />
+        <Text style={styles.password}>Forgot Password?</Text>
 
-      {/* Replace below buttons with your real form */}
-      <Button title="Sign In" onPress={handleLogin} />
+        <TouchableOpacity style={styles.signinButton} onPress={handleLogin}>
+          <Text style={styles.getStartedText}>Sign In</Text>
+        </TouchableOpacity>
 
+        <View style={styles.signupbox}>
+          <Text style={{ color: '#000000' }}>Don’t have an account? </Text>
+          <TouchableOpacity onPress={goToSignup}>
+            <Text style={{ color: '#000000', fontWeight: '600' }}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
 
-      {/* Sign Up Link */}
-      <View style={styles.signupbox}>
-        <Text style={{ color: '#777' }}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={goToSignup}>
-          <Text style={{ color: '#4A90E2', fontWeight: '600' }}>Sign Up</Text>
+        {/* Divider Line with "or" */}
+        <View style={styles.dividerContainer}>
+          <View style={styles.line} />
+          <Text style={styles.orText}>or</Text>
+          <View style={styles.line} />
+        </View>
+
+        {/* Social Buttons */}
+        <View style={styles.socialContainer}>
+          <TouchableOpacity style={styles.socialBtn}>
+            <AntDesign name="google" size={22} color="#000" />
+            <Text style={styles.socialText}>Google</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.socialBtn}>
+            <FontAwesome name="facebook" size={22} color="#000" />
+            <Text style={styles.socialText}>Facebook</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.titletwo}>Donate Without Signing Up</Text>
+        <TouchableOpacity style={styles.registerButton} onPress={handleContinueGuest}>
+          <Text style={styles.registerText}>Continue</Text>
         </TouchableOpacity>
       </View>
-
-    <Text style={styles.ortext}>or</Text>
-
-     <TouchableOpacity style={styles.Btn}>
-    <Text style={styles.Btntext}>Google</Text>
-    </TouchableOpacity>
-
-     <TouchableOpacity style={styles.Btn2}>
-    <Text style={styles.Btntext}>Facebook</Text>
-    </TouchableOpacity>
-
-
-      <Text style={styles.title}>Donate Without Signing Up</Text>
-      <Button title="Continue" onPress={handleContinueGuest} />
-
-      
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    padding: 20
-    },
-    title: {
-    fontSize: 24, 
-    fontWeight: 'bold', 
-    marginBottom: 20,
-    color: '#fff'
-    },
-    signupbox: {
-    flexDirection: 'row', 
-    marginTop: 40,
-    marginBottom: 30 
-    },
-    input: {
-        backgroundColor: '#B1E7A7',
-        height: 40,
-        fontSize: 18,
-        paddingLeft: 20,
-        paddingRight: 10,
-        marginLeft: 35,
-        borderRadius: 30,
-        width: '80%',
-        color: '#00272E',
-        marginTop: 23,
-        fontFamily: 'NunitoMedium',
-        fontWeight: '200'
-    },
-     password: {
-        marginLeft: 50,
-        marginTop: 5,
-        marginBottom: 27,
-        fontSize: 18,
-        color: '#9BE931',
-        fontFamily: 'NunitoItalic'
-    },
-    ortext: {
-        color: '#fff',
-        fontSize: 20
-    },
-    Btn: {
-        backgroundColor: '#58BB44',
-        width: 100,
-        marginLeft: 85,
-        padding: 6,
-        borderRadius: 10,
-        marginBottom: 25,
-        marginTop: 20
-    },
-    Btn2: {
-        backgroundColor: '#58BB44',
-        width: 120,
-        marginLeft: 85,
-        padding: 6,
-        borderRadius: 10,
-        marginBottom: 25,
-        marginTop: 20
-    },
-    Btntext: {
-        fontSize: 23,
-        fontWeight: '200',
-        textAlign: 'center',
-        color: '#303031',
-        fontFamily: 'NunitoBlack'
-    },
-
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5F5F5',
+  },
+  content: {
+    height: 700,
+    width: 310,
+    alignItems: 'center',
+    // backgroundColor: '#b81919a8',
+    borderRadius: 15,
+    paddingVertical: 30,
+    marginTop: -40
+  },
+  title: {
+    fontSize: 43,
+    fontWeight: 'bold',
+    marginBottom: -7,
+    color: '#000000ff',
+  },
+  input: {
+    borderBottomColor: '#006A80',
+    borderBottomWidth: 3,
+    height: 50,
+    fontSize: 22,
+    paddingLeft: 10,
+    paddingRight: 10,
+    width: '80%',
+    color: '#006A80',
+    marginTop: 23,
+    fontWeight: '200',
+  },
+  password: {
+    alignSelf: 'flex-start',
+    marginLeft: 40,
+    marginTop: 5,
+    marginBottom: 27,
+    fontSize: 18,
+    color: '#006A80',
+    fontStyle: 'italic',
+  },
+  signinButton: {
+    backgroundColor: '#EFBF5D',
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+  },
+  getStartedText: {
+    color: '#000000',
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  signupbox: {
+    flexDirection: 'row',
+    marginTop: 30,
+    marginBottom: 30,
+  },
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#D9A19A',
+    marginHorizontal: 10,
+  },
+  orText: {
+    fontSize: 18,
+    color: '#D9A19A',
+    fontStyle: 'italic',
+  },
+  socialContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '80%',
+    marginVertical: 20,
+    gap: 10
+  },
+  socialBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#3C667B',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    width: 140,
+    justifyContent: 'center',
+  },
+  socialText: {
+    fontSize: 18,
+    marginLeft: 8,
+    color: '#000',
+  },
+  titletwo: {
+    fontSize: 34,
+    textAlign: 'center',
+    fontWeight: '600',
+    marginBottom: 10,
+    color: '#000000ff',
+    marginTop: 15
+  },
+  registerButton: {
+    backgroundColor: '#F16739',
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+  },
+  registerText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: '600',
+  },
 });

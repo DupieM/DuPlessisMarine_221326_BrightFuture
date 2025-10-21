@@ -5,6 +5,7 @@ export default function Step4() {
   return (
     <View style={styles.container}>
 
+<View style={styles.content}>
         <Image
         source={require('../../assets/images/reward.png')}
           style={styles.image}
@@ -15,13 +16,7 @@ export default function Step4() {
             Earn badges when donating while helping children in need
             Note you need to create an account to earn rewards
         </Text>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Get Started"
-          color="#3C667B"
-          onPress={() => router.push('/auth/login')}
-        />
-      </View>
+        </View>
     </View>
   );
 }
@@ -34,6 +29,10 @@ container: {
     alignItems: 'center',
     paddingHorizontal: 20,
   },
+  content: {
+    alignItems: 'center',
+    marginBottom: 170,
+  },
   image: {
     width: 120,
     height: 120,
@@ -42,13 +41,13 @@ container: {
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#3C667B',
+    color: '#000000',
     marginBottom: 20,
     textAlign: 'center',
   },
      subtitle: {
     fontSize: 20,
-    color: '#3C667B',
+    color: '#000000',
     marginBottom: 20,
     textAlign: 'center',
   },

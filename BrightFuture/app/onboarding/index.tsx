@@ -5,19 +5,14 @@ export default function Step1() {
   return (
     <View style={styles.container}>
 
+      <View style={styles.content}>
         <Image
         source={require('../../assets/images/donate.png')}
           style={styles.image}
         />
 
-      <Text style={styles.title}>Donate Money</Text>
-      <Text style={styles.subtitle}>Donate money for clothes, food or education nurturing children toward independence </Text>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Next"
-          color="#3C667B"
-          onPress={() => router.push('/onboarding/step2')}
-        />
+        <Text style={styles.title}>Donate Money</Text>
+        <Text style={styles.subtitle}>Donate money for clothes, food or education nurturing children toward independence </Text>
       </View>
     </View>
   );
@@ -31,21 +26,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
   },
+  content: {
+    alignItems: 'center',
+    marginBottom: 130,
+  },
   image: {
     width: 120,
     height: 120,
-    marginBottom: 20
+    marginBottom: 20,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#3C667B',
+    color: '#000000',
     marginBottom: 20,
     textAlign: 'center',
   },
    subtitle: {
     fontSize: 20,
-    color: '#3C667B',
+    color: '#000000',
     marginBottom: 20,
     textAlign: 'center',
   },

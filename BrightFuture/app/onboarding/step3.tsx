@@ -5,6 +5,7 @@ export default function Step3() {
   return (
     <View style={styles.container}>
 
+<View style={styles.content}>
         <Image
         source={require('../../assets/images/hands.png')}
           style={styles.image}
@@ -12,13 +13,7 @@ export default function Step3() {
 
       <Text style={styles.title}>Volunteer to help</Text>
        <Text style={styles.subtitle}>You can easily sign up to give your time as a volunteer to help the children</Text>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Next"
-          color="#3C667B"
-          onPress={() => router.push('/onboarding/step4')}
-        />
-      </View>
+    </View>
     </View>
   );
 }
@@ -31,6 +26,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
   },
+  content: {
+    alignItems: 'center',
+    marginBottom: 130,
+  },
   image: {
     width: 120,
     height: 120,
@@ -39,13 +38,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#3C667B',
+    color: '#000000',
     marginBottom: 20,
     textAlign: 'center',
   },
      subtitle: {
     fontSize: 20,
-    color: '#3C667B',
+    color: '#000000',
     marginBottom: 20,
     textAlign: 'center',
   },
