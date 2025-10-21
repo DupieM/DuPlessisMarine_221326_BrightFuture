@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Dimensions, Text, Platform } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Dimensions, Platform } from 'react-native';
 
 // Get window width for styles consistency
 const { width } = Dimensions.get('window');
@@ -23,9 +23,17 @@ const Card: React.FC<CardProps> = ({ children, style, onPress }) => (
     </TouchableOpacity>
 );
 
-// --- Global Styles that apply to all screen components ---
+// --- All Styles Consolidated Here ---
 const styles = StyleSheet.create({
-    // --- General/Reusable Styles ---
+    // --- Global Styles ---
+    container: { 
+        flex: 1, 
+        backgroundColor: '#f5f5f5' 
+    },
+    scrollContent: {
+        paddingHorizontal: 20,
+        paddingBottom: 100,
+    },
     card: {
         backgroundColor: '#FFFFFF',
         borderRadius: 12,
@@ -33,36 +41,41 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#f5f5f5',
-    },
-    scrollContent: {
-        paddingHorizontal: 20,
-        paddingBottom: 100,
+        shadowOpacity: 0.15, // Slightly stronger shadow
+        shadowRadius: 6,
+        elevation: 5,
     },
 
-    // --- 1. HomeScreen Styles (Donor Dashboard) ---
+    // --- 1. Home Screen Styles (Donor Dashboard) ---
     headerContainer: {
-        width: width + 40, // Span slightly wider to cover edge-to-edge
-        height: 180,
+        width: width + 40, 
+        height: 200, 
         marginLeft: -20,
-        marginTop: -55,
+        marginTop: -65, 
         alignItems: 'center',
         overflow: 'hidden',
     },
     imagePlaceholder: {
         width: '100%',
         height: '100%',
-        backgroundColor: '#87CEEB', // Sky Blue background (Placeholder for image)
-        justifyContent: 'center',
+        backgroundColor: '#87CEEB', // Sky Blue background (Placeholder for sky.png)
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
         paddingLeft: 40,
-        paddingTop: 80,
+        paddingTop: 85, 
+    },
+    title: {
+
+        fontSize: 45,
+
+        fontWeight: 'bold',
+
+        color: '#000000',
+
+        marginTop: -120,
+
+        marginLeft: -10
+
     },
     balanceCard: {
         paddingVertical: 20,
@@ -72,45 +85,47 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     balanceText: {
-        fontSize: 16,
-        marginBottom: 8,
-        fontWeight: '500',
+        fontSize: 18,
+        marginBottom: 10,
+        fontWeight: '600',
+        color: '#1E1924',
     },
     progressBarBackground: {
-        height: 10,
+        height: 12, // Slightly thicker bar
         backgroundColor: '#E0E0E0',
-        borderRadius: 5,
+        borderRadius: 6,
     },
     progressBarFill: {
-        width: '20%', // Visual progress
+        width: '20%', 
         height: '100%',
         backgroundColor: '#6B8E23', // Olive green for progress
-        borderRadius: 5,
+        borderRadius: 6,
     },
     badgeCard: {
         alignItems: 'center',
-        backgroundColor: 'white',
+        paddingVertical: 20,
     },
     badgeText: {
         fontSize: 14,
-        marginBottom: 10,
+        marginBottom: 15,
         color: '#666',
+        fontWeight: '500',
     },
     badgeRow: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '90%',
+        justifyContent: 'space-around',
+        width: '100%', // Use full width for badge row
     },
     badgeIcon: {
-        fontSize: 20,
-        marginHorizontal: 4,
+        fontSize: 24, // Increased size for better visibility
+        marginHorizontal: 2,
     },
     navButton: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingVertical: 18,
-        height: 70,
+        height: 75, // Taller button
         marginBottom: 10,
     },
     navButtonText: {
@@ -119,10 +134,10 @@ const styles = StyleSheet.create({
         color: '#1E1924',
     },
     buttonEmoji: {
-        fontSize: 24,
+        fontSize: 26, // Larger emoji
     },
     
-    // --- 2. DonationScreen Styles (Categories) ---
+    // --- 2. Donation Screen (Categories) Styles ---
     categoryHeader: {
         paddingVertical: 20,
         alignItems: 'flex-start',
@@ -174,7 +189,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
 
-    // --- 3. FoodScreen Styles (Specific Items) ---
+    // --- 3. Food Screen Styles ---
     foodHeader: {
         backgroundColor: '#C49E67', // Earthy brown/orange tone from mockup
         paddingVertical: 40,
@@ -245,7 +260,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 
-    // --- 4. FoodOnlineScreen Styles (Web Link Opener) ---
+    // --- 4. Food Online Link Screen Styles ---
     onlineContainer: {
         flex: 1,
         backgroundColor: '#FFFFFF',
@@ -299,20 +314,9 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 16,
         fontWeight: 'bold',
-    },
-    title: {
-        fontSize: 45,
-        fontWeight: 'bold',
-        color: '#000000',
-        marginTop: -120,
-        marginLeft: -10
-    },
+    }
 });
-
-
 
 export default Card;
 
-// IMPORTANT: We need to export the common styles and the CardProps 
-// so the screen components can use them.
 export { styles, CardProps, width };
