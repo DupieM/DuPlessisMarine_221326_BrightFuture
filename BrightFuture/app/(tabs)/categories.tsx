@@ -1,42 +1,78 @@
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Image, StyleSheet, Platform } from 'react-native';
+import React from 'react';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { useRouter, type Href  } from 'expo-router';
 
+// Import the Card component and the consolidated styles
+import Card, { styles, width } from '../../components/card';
 
-export default function JourneyScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Categories</ThemedText>
-        <HelloWave />
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+export default function DonationScreen() {
+    const router = useRouter();
+
+    // Define the type for the route property more strictly as an Href
+    const CategoryCard = ({ 
+        title, 
+        icon, 
+        color, 
+        buttonText, 
+        route 
+    }: { 
+        title: string, 
+        icon: string, 
+        color: string, 
+        buttonText: string, 
+        route: Href // Use Href here to satisfy TypeScript
+    }) => (
+        <TouchableOpacity
+            style={[styles.categoryCard, { backgroundColor: color }]}
+            // Use 'as Href' to tell TypeScript the string is a valid route
+            onPress={() => router.push(route as Href)} 
+            activeOpacity={0.7}
+        >
+            <View style={styles.categoryContent}>
+                <Text style={styles.categoryIcon}>{icon}</Text>
+                <Text style={styles.categoryTitle}>{title}</Text>
+                {/* Apply the Href type assertion here as well */}
+                <TouchableOpacity style={styles.optionsButton} onPress={() => router.push(route as Href)}>
+                    <Text style={styles.optionsButtonText}>{buttonText}</Text>
+                </TouchableOpacity>
+            </View>
+        </TouchableOpacity>
+    );
+
+    return (
+        <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+            <View style={styles.categoryHeader}>
+                <Text style={styles.categoryScreenTitle}>Categories</Text>
+            </View>
+
+            <CategoryCard 
+                title="Food" 
+                icon="🍎" 
+                color="#E9967A" 
+                buttonText="Options" 
+                route="/food" 
+            />
+            <CategoryCard 
+                title="Clothing" 
+                icon="👕" 
+                color="#D2B48C" 
+                buttonText="Options" 
+                route="/food" 
+            />
+            <CategoryCard 
+                title="Stationary" 
+                icon="📚" 
+                color="#8FBC8F" 
+                buttonText="Options" 
+                route="/food" 
+            />
+            <CategoryCard 
+                title="Electricity" 
+                icon="⚡" 
+                color="#4682B4" 
+                buttonText="Donate ZAR" 
+                route="/food" 
+            />
+        </ScrollView>
+    );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});

@@ -1,61 +1,81 @@
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Image, StyleSheet, Platform, View, Text } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Dimensions, Platform } from 'react-native';
+import { useRouter } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
+import Card, { styles, width } from '../../components/card';
 
+export default function HomeScreen() {
+    const router = useRouter();
 
-export default function JourneyScreen() {
-  return (
-    <ParallaxScrollView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Donar Dashboard</ThemedText>
-        <View style={styles.textcontainer}>
-          <Text style={styles.text}>
-            <Text style={styles.hi}>Hi, I’m{'\n'}</Text>
-            <Text style={styles.name}>Lila Botha</Text>
-          </Text>
-        </View>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+    // Mocking the imported sky.png and shared components
+    const ThemedText = ({ children, style }: any) => <Text style={[{ color: '#1E1924' }, style]}>{children}</Text>;
+    const ThemedView = ({ children, style }: any) => <ThemedView style={style}>{children}</ThemedView>;
+
+    return (
+        <ThemedView style={styles.container}>
+            <ScrollView contentContainerStyle={styles.scrollContent}>
+                
+                {/* Header Section (Mocking Image) */}
+                <View style={{ width: 370, height: 200, marginLeft: -20, marginTop: -65, alignItems: 'center',  }}>
+                  <Image
+                            source={require('../../assets/images/sky.png')}
+                            style={{ width: '100%', height: '100%' }}
+                            resizeMode="cover"
+                          />
+                          <Text style={styles.title}>Donar Dashboard</Text>
+                </View>
+
+                {/* Progress Bar */}
+                <Card style={styles.balanceCard}>
+                    <ThemedText style={styles.balanceText}>R 20 000 - R 300 000</ThemedText>
+                    <View style={styles.progressBarBackground}>
+                        <View style={styles.progressBarFill} />
+                    </View>
+                </Card>
+
+                {/* Badge Collection */}
+                <Card style={styles.badgeCard}>
+                    <ThemedText style={styles.badgeText}>Next Badge to collect: {'<Name>'}</ThemedText>
+                    <View style={styles.badgeRow}>
+                        {['➡️', '❌', '➡️', '❌', '⬅️', '❌', '⬅️'].map((icon, index) => (
+                            <Text key={index} style={styles.badgeIcon}>{icon}</Text>
+                        ))}
+                    </View>
+                </Card>
+
+                {/* Navigation Buttons */}
+                <Card 
+                    style={[styles.navButton, { backgroundColor: '#FFDAB9' }]}
+                >
+                    <ThemedText style={styles.navButtonText}>Donate ZAR</ThemedText>
+                    <Text style={styles.buttonEmoji}>💵</Text>
+                </Card>
+
+                <Card 
+                    style={[styles.navButton, { backgroundColor: '#90EE90' }]}
+                    onPress={() => router.push('/categories')}
+                >
+                    <ThemedText style={styles.navButtonText}>Donations</ThemedText>
+                    <Text style={styles.buttonEmoji}>🎁</Text>
+                </Card>
+
+                <Card 
+                    style={[styles.navButton, { backgroundColor: '#ADD8E6' }]}
+                    onPress={() => router.push('/volunteer')}
+                >
+                    <ThemedText style={styles.navButtonText}>Volunteer Work</ThemedText>
+                    <Text style={styles.buttonEmoji}>🧑‍🤝‍🧑</Text>
+                </Card>
+
+                <Card 
+                    style={[styles.navButton, { backgroundColor: '#FFD700' }]}
+                    onPress={() => router.push('/brightsmiles')}
+                >
+                    <ThemedText style={styles.navButtonText}>Bright Smiles</ThemedText>
+                    <Text style={styles.buttonEmoji}>😄</Text>
+                </Card>
+
+            </ScrollView>
+        </ThemedView>
+    );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-   textcontainer: {
-    width: 340,
-    height: 160
-  },
-  text: {
-    textAlign: 'left',
-    marginTop: -135,
-    marginLeft: 180,
-    color: '#1E1924'
-  },
-  hi: {
-    fontSize: 30,
-    fontStyle: 'italic',
-    fontWeight: '500',
-  },
-  name: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    fontStyle: 'italic',
-  },
-});

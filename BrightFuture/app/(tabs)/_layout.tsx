@@ -1,59 +1,46 @@
-import { Tabs } from 'expo-router';
 import React from 'react';
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Image, Platform } from 'react-native';
-import TabBarBackground from '@/components/ui/TabBarBackground';
+import { Tabs } from 'expo-router';
+// Import 'Image' from 'react-native' here if you are using it locally. 
+// We use a placeholder type for the function argument, but you need the actual component.
+import { FontAwesome } from '@expo/vector-icons';
+import { useColorScheme } from '@/hooks/use-color-scheme'; 
+import { Image } from 'react-native'; // Assuming you have this line locally
 
-// import HomeActive from '../../assets/images/Navbar/Home_Active.png';
-// import HomeInactive from '../../assets/images/Navbar/Home_Inactive.png';
-// import CategoriesActive from '../../assets/images/Navbar/';
-// import CategoriesInactive from '../../assets/images/Navbar/';
-// import SmilesActive from '../../assets/images/Navbar/';
-// import SmilesInactive from '../../assets/images/Navbar/';
-// import VolunteerActive from '../../assets/images/Navbar/';
-// import VolunteerInactive from '../../assets/images/Navbar/';
-// import ProfileActive from '../../assets/images/Navbar/';
-// import ProfileInactive from '../../assets/images/Navbar/';
+// Placeholder function - you can keep this or remove it, as we use inline Image components below
+function TabBarIcon(props: {
+  name: React.ComponentProps<typeof FontAwesome>['name'];
+  color: string;
+}) {
+  return <FontAwesome size={24} style={{ marginBottom: -3 }} {...props} />;
+}
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
-  // Define your colors
-  const activeIconColor = '#EFBF5D'; // White for active SVG
-  const inactiveIconColor = '#A0AA61'; // Light blue/grey for inactive SVG
-  const tabBarBackgroundColor = '#3C667B'; // Deep purple for tab bar background
+  
+  // Define colors based on theme, using your style preferences
+  const tintColor = colorScheme === 'dark' ? '#fff' : '#4682B4'; // SteelBlue for active tab
+  const inactiveColor = colorScheme === 'dark' ? '#999' : '#666';
 
   return (
     <Tabs
       screenOptions={{
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: 'absolute',
-            backgroundColor: tabBarBackgroundColor, 
-          },
-          default: {
-            backgroundColor: tabBarBackgroundColor, 
-          },
-        }),
-
-        tabBarLabelStyle: {
-          color: inactiveIconColor,
-        },
-        tabBarActiveTintColor: activeIconColor,
-        tabBarInactiveTintColor: inactiveIconColor,
+        tabBarActiveTintColor: tintColor,
+        tabBarInactiveTintColor: inactiveColor,
+        headerShown: false, // Hide header by default
+        tabBarStyle: {
+          backgroundColor: colorScheme === 'dark' ? '#1f1f1f' : '#ffffff',
+          borderTopWidth: 1,
+          borderTopColor: colorScheme === 'dark' ? '#333' : '#eee',
+          height: 90, // Give some extra room for modern devices
+          paddingBottom: 25,
+        }
       }}>
+      
+      {/* 1. Home Screen (app/(tabs)/index.tsx) */}
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarLabel: 'Home',
-          tabBarLabelStyle: { fontSize: 10, marginTop: 2 },
           tabBarIcon: ({ focused }) => (
             <Image
               source={
@@ -67,18 +54,18 @@ export default function TabLayout() {
           ),
         }}
       />
+      
+      {/* 2. Donations/Categories Screen (app/(tabs)/categories.tsx) */}
       <Tabs.Screen
-        name="categories"
+        name="categories" // Matches categories.tsx
         options={{
-          title: 'Categories',
-          tabBarLabel: 'Categories',
-          tabBarLabelStyle: { fontSize: 10, marginTop: 2 },
+          title: 'Donate',
           tabBarIcon: ({ focused }) => (
             <Image
               source={
                 focused
-                  ? require('../../assets/images/Navbar/Categories_Active.png')
-                  : require('../../assets/images/Navbar/Categories_Inactive.png')
+                  ? require('../../assets/images/Navbar/Categories_Active.png') // Path assumed
+                  : require('../../assets/images/Navbar/Categories_Inactive.png') // Path assumed
               }
               style={{ width: 24, height: 24 }}
               resizeMode="contain"
@@ -86,37 +73,18 @@ export default function TabLayout() {
           ),
         }}
       />
+      
+      {/* 3. Volunteer Work Screen (app/(tabs)/volunteer.tsx) */}
       <Tabs.Screen
-        name="brightsmiles"
-        options={{
-          title: 'Smiles',
-          tabBarLabel: 'Smiles',
-          tabBarLabelStyle: { fontSize: 10, marginTop: 2 },
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={
-                focused
-                  ? require('../../assets/images/Navbar/Smiles_Active.png')
-                  : require('../../assets/images/Navbar/Smiles_Inactive.png')
-              }
-              style={{ width: 24, height: 24 }}
-              resizeMode="contain"
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="volunteer"
+        name="volunteer" // Matches volunteer.tsx
         options={{
           title: 'Volunteer',
-          tabBarLabel: 'Volunteer',
-          tabBarLabelStyle: { fontSize: 10, marginTop: 2 },
           tabBarIcon: ({ focused }) => (
             <Image
               source={
                 focused
-                  ? require('../../assets/images/Navbar/Volunteer_Active.png')
-                  : require('../../assets/images/Navbar/Volunteer_Inactive.png')
+                  ? require('../../assets/images/Navbar/Volunteer_Active.png') // Path assumed
+                  : require('../../assets/images/Navbar/Volunteer_Inactive.png') // Path assumed
               }
               style={{ width: 24, height: 24 }}
               resizeMode="contain"
@@ -124,18 +92,37 @@ export default function TabLayout() {
           ),
         }}
       />
+      
+      {/* 4. Bright Smiles Screen (app/(tabs)/brightsmiles.tsx) */}
       <Tabs.Screen
-        name="profile"
+        name="brightsmiles" // Matches brightsmiles.tsx
+        options={{
+          title: 'Smiles',
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={
+                focused
+                  ? require('../../assets/images/Navbar/Smiles_Active.png') // Path assumed
+                  : require('../../assets/images/Navbar/Smiles_Inactive.png') // Path assumed
+              }
+              style={{ width: 24, height: 24 }}
+              resizeMode="contain"
+            />
+          ),
+        }}
+      />
+      
+      {/* 5. Profile Screen (app/(tabs)/profile.tsx) */}
+      <Tabs.Screen
+        name="profile" // Matches profile.tsx
         options={{
           title: 'Profile',
-          tabBarLabel: 'Profile',
-          tabBarLabelStyle: { fontSize: 10, marginTop: 2 },
           tabBarIcon: ({ focused }) => (
             <Image
               source={
                 focused
-                  ? require('../../assets/images/Navbar/Profile_Active.png')
-                  : require('../../assets/images/Navbar/Profile_Inactive.png')
+                  ? require('../../assets/images/Navbar/Profile_Active.png') // Path assumed
+                  : require('../../assets/images/Navbar/Profile_Inactive.png') // Path assumed
               }
               style={{ width: 24, height: 24 }}
               resizeMode="contain"
@@ -143,6 +130,7 @@ export default function TabLayout() {
           ),
         }}
       />
+      
     </Tabs>
   );
 }

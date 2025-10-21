@@ -1,18 +1,32 @@
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
 
+// 1. Import the useAuth hook from the root layout file
+import { useAuth } from '../_layout'; 
+
 export default function LoginScreen() {
+  // 2. Get the signInAsGuest function from the useAuth hook
+  const { signInAsGuest } = useAuth();
+
+  // These functions no longer need 'router.replace' because the
+  // logic in app/_layout.tsx handles the navigation automatically 
+  // when the user state changes.
   const handleLogin = () => {
-    router.replace('/(tabs)');
+    // In a real app, this would call a full login service.
+    // For now, we simulate success by signing in as guest.
+    signInAsGuest();
   };
 
   const handleContinueGuest = () => {
-    router.replace('/(tabs)');
+    // 3. Call the function that updates the user state
+    signInAsGuest();
   };
 
   const goToSignup = () => {
-    router.push('/auth/signup');
+    // Assuming you have an app/auth/signup.tsx file
+    router.push('/auth/signup'); 
   };
 
   return (
@@ -24,7 +38,7 @@ export default function LoginScreen() {
         <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#006A80" secureTextEntry />
         <Text style={styles.password}>Forgot Password?</Text>
 
-        <TouchableOpacity style={styles.signinButton}>
+        <TouchableOpacity style={styles.signinButton} onPress={handleLogin}>
           <Text style={styles.getStartedText}>Sign In</Text>
         </TouchableOpacity>
 
