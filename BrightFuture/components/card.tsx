@@ -28,11 +28,11 @@ const styles = StyleSheet.create({
     // --- Global Styles ---
     container: { 
         flex: 1, 
-        backgroundColor: '#f5f5f5' 
+        backgroundColor: '#f5f5f5'
     },
     scrollContent: {
         paddingHorizontal: 20,
-        paddingBottom: 100,
+        paddingBottom: 0,
     },
     card: {
         backgroundColor: '#FFFFFF',
@@ -58,28 +58,21 @@ const styles = StyleSheet.create({
     imagePlaceholder: {
         width: '100%',
         height: '100%',
-        backgroundColor: '#87CEEB', // Sky Blue background (Placeholder for sky.png)
+        backgroundColor: '#E49086', // Sky Blue background (Placeholder for sky.png)
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        paddingLeft: 40,
-        paddingTop: 85, 
+        paddingLeft: 70,
+        paddingTop: 90, 
     },
     title: {
-
         fontSize: 45,
-
         fontWeight: 'bold',
-
         color: '#000000',
-
-        marginTop: -120,
-
-        marginLeft: -10
 
     },
     balanceCard: {
         paddingVertical: 20,
-        marginTop: -50, // Pull it up over the header background
+        marginTop: -40, // Pull it up over the header background
         backgroundColor: 'white',
         borderColor: '#EFEFEF',
         borderWidth: 1,
@@ -114,7 +107,7 @@ const styles = StyleSheet.create({
     badgeRow: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        width: '100%', // Use full width for badge row
+        width: '100%',
     },
     badgeIcon: {
         fontSize: 24, // Increased size for better visibility
@@ -127,11 +120,12 @@ const styles = StyleSheet.create({
         paddingVertical: 18,
         height: 75, // Taller button
         marginBottom: 10,
+        marginTop: 10
     },
     navButtonText: {
-        fontSize: 18,
+        fontSize: 23,
         fontWeight: '600',
-        color: '#1E1924',
+        color: '#ffffffff',
     },
     buttonEmoji: {
         fontSize: 26, // Larger emoji
@@ -141,18 +135,21 @@ const styles = StyleSheet.create({
     categoryHeader: {
         paddingVertical: 20,
         alignItems: 'flex-start',
+        marginLeft: 50
     },
     categoryScreenTitle: {
-        fontSize: 32,
+        fontSize: 45,
         fontWeight: 'bold',
         color: '#1E1924',
     },
     categoryCard: {
         height: 160,
-        borderRadius: 15,
-        marginBottom: 20,
+        width: 360,
+        borderRadius: 0,
+        marginBottom: 0,
         padding: 20,
         justifyContent: 'center',
+        marginLeft: -20
     },
     categoryContent: {
         flexDirection: 'row',
@@ -163,6 +160,8 @@ const styles = StyleSheet.create({
         fontSize: 60,
         opacity: 0.6,
         color: 'rgba(255, 255, 255, 0.8)',
+        marginTop: -70,
+        left: 20
     },
     categoryTitle: {
         fontSize: 24,
@@ -173,15 +172,13 @@ const styles = StyleSheet.create({
         left: 20,
     },
     optionsButton: {
-        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        backgroundColor: '#006A80',
         paddingHorizontal: 15,
         paddingVertical: 8,
         borderRadius: 20,
-        borderWidth: 1,
-        borderColor: '#FFFFFF',
         position: 'absolute',
         right: 15,
-        top: 20,
+        top: -10,
     },
     optionsButtonText: {
         color: '#FFFFFF',

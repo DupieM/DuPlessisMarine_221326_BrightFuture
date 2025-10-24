@@ -102,14 +102,12 @@ export default function ProfileScreen() {
   return (
     <ScrollView style={styles.container}>
 
-      <View style={{ width: 370, height: 200, marginLeft: -20, marginTop: -65, alignItems: 'center',  }}>
-        <Image
-          source={require('../../assets/images/sky.png')}
-          style={{ width: '100%', height: '100%' }}
-          resizeMode="cover"
-        />
-        <Text style={styles.title}>Profile</Text>
-      </View>
+      <View style={styles.headerContainer}>
+                    {/* Placeholder for the sky image - using the style for visual representation */}
+                    <View style={styles.imagePlaceholder}>
+                        <Text style={styles.title}>Profile</Text>
+                    </View>
+                </View>
 
       <TouchableOpacity onPress={pickImage}>
         {uploading ? (
@@ -159,20 +157,38 @@ const styles = StyleSheet.create({
   container: { 
     flex: 1, 
     padding: 20, 
-    backgroundColor: '#f5f5f5' 
+    backgroundColor: '#f5f5f5',
   },
-  title: {
-    fontSize: 56,
-    fontWeight: 'bold',
-    color: '#000000ff',
-    marginTop: -120,
-    
-  },
+   headerContainer: {
+        width: 360, 
+        height: 170, 
+        marginLeft: -20,
+        marginTop: -65, 
+        alignItems: 'center',
+        overflow: 'hidden',
+        marginBottom: 20
+    },
+    imagePlaceholder: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#E49086', // Sky Blue background (Placeholder for sky.png)
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        paddingLeft: 70,
+        paddingTop: 90, 
+    },
+    title: {
+        fontSize: 56,
+        fontWeight: 'bold',
+        color: '#000000',
+      left: 30
+    },
   profileImage: { 
     width: 120, 
     height: 120, 
     borderRadius: 60, 
     marginBottom: 20,
+    marginLeft: 100
   },
   placeholder: { 
     backgroundColor: '#ccc', 
@@ -187,13 +203,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 15,
     paddingHorizontal: 10,
+    color: '#006A80',
+    left: 10
   },
   button: { 
-    backgroundColor: '#EFBF5D', 
+    backgroundColor: '#A0AA61', 
     paddingVertical: 12, 
     paddingHorizontal: 25, 
     borderRadius: 25, 
-    marginTop: 20 },
+    marginTop: 20 ,
+    width: 150,
+    left: 86
+  },
   buttonText: { 
     fontSize: 18, 
     color: '#000', 

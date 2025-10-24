@@ -16,12 +16,14 @@ export default function HomeScreen() {
     const router = useRouter();
 
     // Mock Data for the Dashboard
-    const totalDonated = 20000;
+    const totalDonated = 50000;
     const targetGoal = 300000;
     const progress = (totalDonated / targetGoal) * 100;
     
     // Mock badge progress matching your emojis: [achieved, not, achieved, not, not, not, not]
-    const badgeEmojis = ['➡️', '❌', '➡️', '❌', '⬅️', '❌', '⬅️'];
+    const badgeEmojis = [ '❌', '➡️', '❌', '➡️', '❌'];
+    const badgeEmojistwo = [ '❌', '➡️', '❌', '➡️', '❌'];
+    const badgeEmojisthree = [ '❌', '➡️', '❌', '➡️', '❌'];
     const badgeAchieved = [true, false, true, false, false, false, false];
 
 
@@ -39,7 +41,7 @@ export default function HomeScreen() {
                 <View style={styles.headerContainer}>
                     {/* Placeholder for the sky image - using the style for visual representation */}
                     <View style={styles.imagePlaceholder}>
-                        <Text style={styles.title}>Donor Dashboard</Text>
+                        <Text style={styles.title}>Dashboard</Text>
                     </View>
                 </View>
 
@@ -61,56 +63,54 @@ export default function HomeScreen() {
                             <BadgeIcon key={index} icon={icon} achieved={badgeAchieved[index]} />
                         ))}
                     </View>
+                    <View style={styles.badgeRow}>
+                        {badgeEmojistwo.map((icon, index) => (
+                            <BadgeIcon key={index} icon={icon} achieved={badgeAchieved[index]} />
+                        ))}
+                    </View>
+                    <View style={styles.badgeRow}>
+                        {badgeEmojisthree.map((icon, index) => (
+                            <BadgeIcon key={index} icon={icon} achieved={badgeAchieved[index]} />
+                        ))}
+                    </View>
                 </Card>
 
                 {/* 4. Navigation Buttons */}
                 
                 {/* Donate ZAR Button */}
                 <Card 
-                    style={[styles.navButton, { backgroundColor: '#FFDAB9' }]} // Peach Puff color
-                    onPress={() => router.push('/categories')} 
+                    style={[styles.navButton, { backgroundColor: '#D2754F' }]} // Peach Puff color
+                    onPress={() => router.push('/')} 
                 >
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={styles.buttonEmoji}>💵</Text>
                         <Text style={[styles.navButtonText, { marginLeft: 10 }]}>Donate ZAR</Text>
                     </View>
-                    <FontAwesome name="chevron-right" size={16} color="#333" />
+                    <FontAwesome name="chevron-right" size={16} color="#ffff" />
                 </Card>
 
                 {/* Donations History Button */}
                 <Card 
-                    style={[styles.navButton, { backgroundColor: '#90EE90' }]} // Light Green
-                    onPress={() => console.log('Go to Donations History')}
+                    style={[styles.navButton, { backgroundColor: '#A0AA61' }]} // Light Green
+                    onPress={() => router.push('/categories')}
                 >
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={styles.buttonEmoji}>🎁</Text>
                         <Text style={[styles.navButtonText, { marginLeft: 10 }]}>Donations</Text>
                     </View>
-                    <FontAwesome name="chevron-right" size={16} color="#333" />
+                    <FontAwesome name="chevron-right" size={16} color="#ffff" />
                 </Card>
 
                 {/* Volunteer Work Button */}
                 <Card 
-                    style={[styles.navButton, { backgroundColor: '#ADD8E6' }]} // Light Blue
+                    style={[styles.navButton, { backgroundColor: '#4EA8BA' }]} // Light Blue
                     onPress={() => router.push('/volunteer')}
                 >
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={styles.buttonEmoji}>🧑‍🤝‍🧑</Text>
                         <Text style={[styles.navButtonText, { marginLeft: 10 }]}>Volunteer Work</Text>
                     </View>
-                    <FontAwesome name="chevron-right" size={16} color="#333" />
-                </Card>
-                
-                {/* Bright Smiles Button */}
-                <Card 
-                    style={[styles.navButton, { backgroundColor: '#FFD700' }]} // Gold
-                    onPress={() => router.push('/brightsmiles')}
-                >
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={styles.buttonEmoji}>😄</Text>
-                        <Text style={[styles.navButtonText, { marginLeft: 10 }]}>Bright Smiles</Text>
-                    </View>
-                    <FontAwesome name="chevron-right" size={16} color="#333" />
+                    <FontAwesome name="chevron-right" size={16} color="#ffff" />
                 </Card>
 
             </ScrollView>

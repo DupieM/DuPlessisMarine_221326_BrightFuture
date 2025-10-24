@@ -48,21 +48,21 @@ export default function DonationScreen() {
             <CategoryCard 
                 title="Food" 
                 icon="🍎" 
-                color="#E9967A" 
+                color="#D2754F" 
                 buttonText="Options" 
                 route="/food" 
             />
             <CategoryCard 
                 title="Clothing" 
                 icon="👕" 
-                color="#D2B48C" 
+                color="#E0AC62" 
                 buttonText="Options" 
                 route="/food" 
             />
             <CategoryCard 
                 title="Stationary" 
                 icon="📚" 
-                color="#8FBC8F" 
+                color="#A0AA61" 
                 buttonText="Options" 
                 route="/food" 
             />
