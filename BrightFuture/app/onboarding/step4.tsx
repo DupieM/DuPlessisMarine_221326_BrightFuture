@@ -24,7 +24,7 @@ export default function Step4() {
 const styles = StyleSheet.create({
 container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#dceef1ff',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,

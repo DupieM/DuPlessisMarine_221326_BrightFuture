@@ -5,7 +5,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 const steps = [
   '/onboarding',
-  '/onboarding/step2',
   '/onboarding/step3',
   '/onboarding/step4',
 ] as const;
@@ -77,11 +76,6 @@ export default function OnboardingLayout() {
           </TouchableOpacity>
         )}
 
-        <Image
-          source={require('../../assets/images/tree.png')}
-          style={styles.image}
-        />
-
       </View>
     </View>
   );
@@ -93,6 +87,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     position: 'absolute',
+    top: 260,
     bottom: -55,
     width: '100%',
     alignItems: 'center',
@@ -108,7 +103,7 @@ const styles = StyleSheet.create({
   dotsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 8
   },
   dot: {
     width: 10,
