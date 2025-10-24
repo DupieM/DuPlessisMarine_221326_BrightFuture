@@ -1,146 +1,132 @@
 import React, { useState, useEffect, useCallback, createContext, useContext } from 'react';
-// Removed unused imports (Redirect, Slot)
-import { Stack, useSegments, useRouter } from 'expo-router'; 
+import { Stack, useSegments, useRouter } from 'expo-router';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
-
-// Assuming you have this hook for theme switching
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 // --- AUTH CONTEXT SETUP ---
 interface AuthContextType {
-    user: string | null;
-    signInAsGuest: () => void;
-    isLoading: boolean; 
+  user: any | null;
+  signInAsGuest: () => void;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({
-    user: null,
-    signInAsGuest: () => {},
-    isLoading: true,
+  user: null,
+  signInAsGuest: () => {},
+  isLoading: true,
 });
 
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    return context;
-};
+export const useAuth = () => useContext(AuthContext);
 
 // --- AUTH STATE MANAGER ---
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<any | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-    const signInAsGuest = useCallback(() => {
-        // --- FIX: Add quick loading transition to prevent freeze ---
-        setIsLoading(true); 
+  const signInAsGuest = useCallback(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setUser({ guest: true });
+      setIsLoading(false);
+    }, 50);
+  }, []);
 
-        // Simulate successful sign-in after a slight delay
-        setTimeout(() => {
-            setUser('guest-user-123');
-            setIsLoading(false); // This switch triggers the RootNavigation redirect cleanly
-        }, 50); // Set a very short delay (50ms)
-        // --------------------------------------------------------
-    }, []);
+  // ✅ Listen for real Firebase Auth changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        console.log('✅ User logged in:', firebaseUser.email);
+        setUser(firebaseUser);
+      } else {
+        console.log('🚪 User logged out');
+        setUser(null);
+      }
+      setIsLoading(false);
+    });
 
-    useEffect(() => {
-        // Initial check: Simulate loading for 500ms
-        setTimeout(() => {
-            setUser(null); // Start logged out to ensure Login screen is the default
-            setIsLoading(false);
-        }, 500);
-    }, []);
+    return unsubscribe;
+  }, []);
 
-    const value = { user, signInAsGuest, isLoading }; 
+  const value = { user, signInAsGuest, isLoading };
 
-    return (
-        <AuthContext.Provider value={value}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 // --- MAIN ROUTING LOGIC ---
 const RootNavigation = () => {
-    // 1. CALL ALL HOOKS UNCONDITIONALLY AT THE TOP
-    const { user, isLoading } = useAuth();
-    const router = useRouter(); 
-    const segments = useSegments(); 
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+  const segments = useSegments();
 
-    // Determine if the user is currently on an authentication/onboarding route
-    const inAuthGroup = segments[0] === 'onboarding' || segments[0] === 'auth';
+  const inAuthGroup = segments[0] === 'onboarding' || segments[0] === 'auth';
 
-    // 2. Redirect Logic: Use precise path checks to prevent loops
-    useEffect(() => {
-        const currentPath = segments.join('/'); 
+  useEffect(() => {
+    if (isLoading) return;
 
-        if (!isLoading) {
-            if (user) {
-                // AUTHENTICATED: Redirect to the main app if on a login screen.
-                if (inAuthGroup) {
-                    router.replace('/(tabs)');
-                }
-            } else {
-                // NOT AUTHENTICATED: Redirect to login screen if on a protected screen.
-                if (!inAuthGroup && currentPath !== 'onboarding') {
-                    router.replace('/auth/login');
-                }
-            }
-        }
-    }, [user, isLoading, segments.join('/'), router]); 
+    const currentPath = segments.join('/');
 
-    // 3. Conditional Return for Loading State
-    if (isLoading) {
-        return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#F16739" />
-            </View>
-        );
+    if (user) {
+      if (inAuthGroup) {
+        router.replace('/(tabs)');
+      }
+    } else {
+      if (!inAuthGroup && currentPath !== 'onboarding') {
+        router.replace('/auth/login');
+      }
     }
-    
-    // 4. Stack Setup based on user state
+  }, [user, isLoading, segments.join('/'), router]);
+
+  if (isLoading) {
     return (
-        <Stack screenOptions={{ headerShown: false }}>
-            
-            {user ? (
-                // --- PROTECTED ROUTES (LOGGED IN) ---
-                <>
-                    <Stack.Screen name="(tabs)" />
-                    <Stack.Screen name="food" options={{ title: 'Food Details', headerShown: true }} />
-                    <Stack.Screen name="food-online" options={{ title: 'Checkers 60x60', headerShown: true }} />
-                </>
-            ) : (
-                // --- UNPROTECTED ROUTES (LOGGED OUT) ---
-                <>
-                    <Stack.Screen name="onboarding" />
-                    <Stack.Screen name="auth/login" /> 
-                    <Stack.Screen name="auth/signup" />
-                </>
-            )}
-        </Stack>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#F16739" />
+      </View>
     );
-}
+  }
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      {user ? (
+        <>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="food" options={{ title: 'Food Details', headerShown: true }} />
+          <Stack.Screen name="food-online" options={{ title: 'Checkers 60x60', headerShown: true }} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="onboarding" />
+          <Stack.Screen name="auth/login" />
+          <Stack.Screen name="auth/signup" />
+        </>
+      )}
+    </Stack>
+  );
+};
 
 // --- ROOT LAYOUT COMPONENT ---
 export default function RootLayout() {
-    const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme();
 
-    return (
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <AuthProvider>
-                <RootNavigation />
-            </AuthProvider>
-            <StatusBar style="auto" />
-        </ThemeProvider>
-    );
+  return (
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <AuthProvider>
+        <RootNavigation />
+      </AuthProvider>
+      <StatusBar style="auto" />
+    </ThemeProvider>
+  );
 }
 
 const styles = StyleSheet.create({
-    loadingContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f5f5f5',
-    },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+  },
 });

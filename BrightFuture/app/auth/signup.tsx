@@ -2,7 +2,7 @@ import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { View, Text, Button, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, Button, TouchableOpacity, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { handleSignin } from '../../services/authService';
@@ -41,74 +41,81 @@ export default function SignUpScreen() {
     };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: '#F5F5F5' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.container}>
           <Text style={styles.title}>Register</Text>
-    
-            <View>
-              <TextInput 
-                style={styles.input} 
-                placeholder='Full Name' 
-                placeholderTextColor="#006A80"
-                onChangeText={newText => setName(newText)}
-                defaultValue={name}
-              />
-            </View>
-            
-            <View>
-              <TextInput 
-                style={styles.input} 
-                placeholder='Username' 
-                placeholderTextColor="#006A80"
-                onChangeText={newText => setUserName(newText)}
-                defaultValue={username}
-              />
-            </View>
 
-            <View>
-              <TextInput 
-                style={styles.input} 
-                placeholder='Phone Number' 
-                placeholderTextColor="#006A80"
-                onChangeText={newText => setPhonenumber(newText)}
-                defaultValue={phonenumber}
-              />
-            </View>
+          <TextInput
+            style={styles.input}
+            placeholder="Full Name"
+            placeholderTextColor="#006A80"
+            onChangeText={setName}
+            value={name}
+          />
 
-            <View>
-              <TextInput 
-                style={styles.input} 
-                placeholder='Email' 
-                placeholderTextColor="#006A80"
-                onChangeText={newText => setEmail(newText)}
-                defaultValue={email}
-              />
-            </View>
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            placeholderTextColor="#006A80"
+            onChangeText={setUserName}
+            value={username}
+          />
 
-            <View>
-              <TextInput 
-                style={styles.input} 
-                placeholder='Password' 
-                placeholderTextColor="#006A80"
-                onChangeText={newText => setPassword(newText)}
-                defaultValue={password}
-              />
-            </View>
+          <TextInput
+            style={styles.input}
+            placeholder="Phone Number"
+            placeholderTextColor="#006A80"
+            keyboardType="phone-pad"
+            onChangeText={setPhonenumber}
+            value={phonenumber}
+          />
 
-            <TouchableOpacity style={styles.signinButton} onPress={handleCreation}>
-              <Text style={styles.getStartedText}>Register</Text>
-            </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="#006A80"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            onChangeText={setEmail}
+            value={email}
+          />
 
-    </View>
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor="#006A80"
+            secureTextEntry
+            onChangeText={setPassword}
+            value={password}
+          />
+
+          <TouchableOpacity style={styles.signinButton} onPress={handleCreation}>
+            <Text style={styles.getStartedText}>Register</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    padding: 20,
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 40,
     backgroundColor: '#F5F5F5',
+  },
+  container: {
+    alignItems: 'center',
+    width: '100%',
   },
   title: {
     fontSize: 43, 

@@ -12,3 +12,23 @@ export const createUserInformation = async (info, uid) => {
         console.error("Error adding document: ", e);
     }
 };
+
+// fetch user information
+export const getUserInfo = async () => {
+  const user = auth.currentUser;
+  if (!user) throw new Error('No user logged in');
+
+  try {
+    const userDocRef = doc(db, 'users', user.uid);
+    const userSnap = await getDoc(userDocRef);
+    if (userSnap.exists()) {
+      return userSnap.data();
+    } else {
+      console.log('No user data found in Firestore');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+};

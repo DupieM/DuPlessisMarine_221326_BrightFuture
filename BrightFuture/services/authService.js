@@ -10,7 +10,7 @@ export const handleLogin = async (email, password) => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log("Logged In User -" + user.email);
-      return true; // Login success
+      return user; // Login success
   } catch (error) {
       console.log(error.message); // Log the error for debugging
       throw error; // Throw the error to be caught in the login function

@@ -1,31 +1,67 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
 
 // 1. Import the useAuth hook from the root layout file
 import { useAuth } from '../_layout'; 
+import { handleLogin, resetPassword } from '@/services/authService';
 
 export default function LoginScreen() {
-  // 2. Get the signInAsGuest function from the useAuth hook
-  const { signInAsGuest } = useAuth();
 
-  // These functions no longer need 'router.replace' because the
-  // logic in app/_layout.tsx handles the navigation automatically 
-  // when the user state changes.
-  const handleLogin = () => {
-    // In a real app, this would call a full login service.
-    // For now, we simulate success by signing in as guest.
-    signInAsGuest();
+  const { signInAsGuest } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // ---- Sign In with Firebase ----
+  const onLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Error', 'Please enter both email and password');
+      return;
+    }
+    setLoading(true);
+    try {
+      const user = await handleLogin(email, password);
+      if (user) {
+        Alert.alert('Welcome back!', 'You are now signed in!');
+        router.replace('/(tabs)'); // Optional fallback (context should handle it)
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert('Login Failed', error.message);
+      } else {
+        Alert.alert('Login Failed', String(error));
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
+  // ---- Reset Password ----
+  const onResetPassword = async () => {
+    if (!email) {
+      Alert.alert('Missing Email', 'Please enter your email to reset your password.');
+      return;
+    }
+    try {
+      await resetPassword(email);
+      Alert.alert('Check your inbox', 'A password reset email has been sent.');
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert('Error', error.message);
+      } else {
+        Alert.alert('Error', String(error));
+      }
+    }
+  };
+
+   // ---- Guest Login ----
   const handleContinueGuest = () => {
-    // 3. Call the function that updates the user state
     signInAsGuest();
   };
 
   const goToSignup = () => {
-    // Assuming you have an app/auth/signup.tsx file
     router.push('/auth/signup'); 
   };
 
@@ -34,12 +70,31 @@ export default function LoginScreen() {
       <View style={styles.content}>
         <Text style={styles.title}>Sign In</Text>
 
-        <TextInput style={styles.input} placeholder="Username" placeholderTextColor="#006A80" />
-        <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#006A80" secureTextEntry />
-        <Text style={styles.password}>Forgot Password?</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor="#006A80"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="#006A80"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity onPress={onResetPassword}>
+          <Text style={styles.password}>Forgot Password?</Text>
+        </TouchableOpacity>
 
-        <TouchableOpacity style={styles.signinButton} onPress={handleLogin}>
-          <Text style={styles.getStartedText}>Sign In</Text>
+        <TouchableOpacity style={styles.signinButton} onPress={onLogin} disabled={loading}>
+          <Text style={styles.getStartedText}>
+            {loading ? 'Signing In...' : 'Sign In'}
+          </Text>
         </TouchableOpacity>
 
         <View style={styles.signupbox}>
@@ -83,7 +138,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#ffffffff',
   },
   content: {
     height: 700,
