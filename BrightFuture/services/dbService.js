@@ -32,3 +32,5 @@ export const getUserInfo = async () => {
     throw error;
   }
 };
+
+// fetch volunteer information

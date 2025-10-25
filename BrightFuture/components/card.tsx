@@ -188,23 +188,23 @@ const styles = StyleSheet.create({
 
     // --- 3. Food Screen Styles ---
     foodHeader: {
-        backgroundColor: '#C49E67', // Earthy brown/orange tone from mockup
-        paddingVertical: 40,
+        backgroundColor: '#D2754F', // Earthy brown/orange tone from mockup
+        paddingVertical: 20,
         paddingHorizontal: 20,
-        width: width + 40,
+        width: width + 20,
         marginLeft: -20,
         alignItems: 'flex-start',
-        borderBottomLeftRadius: 30,
-        borderBottomRightRadius: 30,
-        marginBottom: 20,
+        marginBottom: 30,
     },
     foodTitle: {
-        fontSize: 32,
+        fontSize: 52,
         fontWeight: 'bold',
-        color: '#FFFFFF',
+        color: '#ffffffff',
+        marginTop: 20,
+        marginLeft: 100
     },
     contentSection: {
-        marginBottom: 25,
+        marginBottom: -65,
         paddingHorizontal: 5,
     },
     sectionHeading: {
@@ -239,6 +239,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderLeftWidth: 4,
         borderColor: '#C49E67',
+        marginBottom: 90
     },
     addressText: {
         fontSize: 16,
@@ -250,11 +251,30 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         alignItems: 'center',
         borderRadius: 30,
+        marginTop: 20
     },
     donateButtonText: {
         color: '#FFFFFF',
         fontSize: 18,
         fontWeight: 'bold',
+    },
+    dividerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 10,
+        marginTop: 30
+    },
+    line: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#D9A19A',
+        marginHorizontal: 10,
+    },
+    orText: {
+        fontSize: 18,
+        color: '#D9A19A',
+        fontStyle: 'italic',
     },
 
     // --- 4. Food Online Link Screen Styles ---
@@ -311,7 +331,23 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 16,
         fontWeight: 'bold',
-    }
+    },
+
+    //
+    storeButton: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  storeButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
 
 export default Card;
