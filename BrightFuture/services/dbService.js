@@ -34,3 +34,14 @@ export const getUserInfo = async () => {
 };
 
 // fetch volunteer information
+export const getVolunteerInitiatives = async () => {
+
+  const allVolunteerInitiatives = [];
+
+  const querySnapshot = await getDocs(collection(db, "volunteer"));
+  querySnapshot.forEach((doc) => {
+    allVolunteerInitiatives.push({ ...doc.data(), id: doc.id });
+  });
+
+  return allVolunteerInitiatives;
+};

@@ -57,21 +57,21 @@ export default function DonationScreen() {
                 icon="👕" 
                 color="#E0AC62" 
                 buttonText="Options" 
-                route="/food" 
+                route="/clothing" 
             />
             <CategoryCard 
                 title="Stationary" 
                 icon="📚" 
                 color="#A0AA61" 
                 buttonText="Options" 
-                route="/food" 
+                route="/stationary" 
             />
             <CategoryCard 
                 title="Electricity" 
                 icon="⚡" 
                 color="#4682B4" 
                 buttonText="Donate ZAR" 
-                route="/food" 
+                route="/" 
             />
         </ScrollView>
     );

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { MaterialIcons, Ionicons, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 
 export default function VolunteerDetailScreen() {
-  const { title, description, iconLib, iconName } = useLocalSearchParams();
+  const { title, description, iconLib, iconName, imageUrl} = useLocalSearchParams();
 
   const renderIcon = (lib: string, name: string) => {
     switch (lib) {
@@ -41,7 +41,7 @@ export default function VolunteerDetailScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.iconContainer}>{renderIcon(iconLib as string, iconName as string)}</View>
+      <Image source={{ uri: imageUrl as string }} style={styles.detailImage} resizeMode="cover" />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
 
@@ -85,4 +85,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   joinText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  detailImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
 });
