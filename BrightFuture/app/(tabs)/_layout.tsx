@@ -93,25 +93,6 @@ export default function TabLayout() {
         }}
       />
       
-      {/* 4. Bright Smiles Screen (app/(tabs)/brightsmiles.tsx) */}
-      <Tabs.Screen
-        name="brightsmiles" // Matches brightsmiles.tsx
-        options={{
-          title: 'Smiles',
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={
-                focused
-                  ? require('../../assets/images/Navbar/Smiles_Active.png') // Path assumed
-                  : require('../../assets/images/Navbar/Smiles_Inactive.png') // Path assumed
-              }
-              style={{ width: 24, height: 24 }}
-              resizeMode="contain"
-            />
-          ),
-        }}
-      />
-      
       {/* 5. Profile Screen (app/(tabs)/profile.tsx) */}
       <Tabs.Screen
         name="profile" // Matches profile.tsx

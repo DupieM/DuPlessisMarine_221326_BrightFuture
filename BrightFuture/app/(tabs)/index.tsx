@@ -1,16 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import Card, { styles, width } from '../../components/card';
 import * as WebBrowser from 'expo-web-browser'; // Imported but not used, safe to keep or remove later
-
-// Helper component for the Badge icons (using simple FontAwesome for placeholding)
-const BadgeIcon: React.FC<{ icon: string, achieved: boolean }> = ({ icon, achieved }) => (
-    <Text style={[styles.badgeIcon, { color: achieved ? '#6B8E23' : '#E0E0E0' }]}>
-        {icon}
-    </Text>
-);
+import { getBadges, getUserInfo } from '@/services/dbService';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default function HomeScreen() {
     const router = useRouter();
@@ -20,11 +15,32 @@ export default function HomeScreen() {
     const targetGoal = 300000;
     const progress = (totalDonated / targetGoal) * 100;
     
-    // Mock badge progress matching your emojis: [achieved, not, achieved, not, not, not, not]
-    const badgeEmojis = [ '❌', '➡️', '❌', '➡️', '❌'];
-    const badgeEmojistwo = [ '❌', '➡️', '❌', '➡️', '❌'];
-    const badgeEmojisthree = [ '❌', '➡️', '❌', '➡️', '❌'];
-    const badgeAchieved = [true, false, true, false, false, false, false];
+    const [allBadges, setAllBadges] = useState<any[]>([]);
+    const [userData, setUserData] = useState({ nextBadge: '', badges: {} });
+
+    useEffect(() => {
+      const auth = getAuth();
+
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          // Fetch all badges metadata
+          const badges = await getBadges();
+          setAllBadges(badges);
+
+          // Fetch current user's badge data
+          const currentUserDataRaw = await getUserInfo();
+
+          const currentUserData = {
+            nextBadge: currentUserDataRaw?.nextBadge || "",
+            badges: currentUserDataRaw?.badges || {},
+          };
+
+          setUserData(currentUserData);
+        }
+      });
+
+      return () => unsubscribe(); // clean up listener when component unmounts
+    }, []);
 
 
     return (
@@ -55,27 +71,29 @@ export default function HomeScreen() {
                     </View>
                 </Card>
 
-                {/* 3. Next Badge Card */}
-                <Card style={styles.badgeCard}>
-                    <Text style={styles.badgeText}>Next Badge to collect: {'<Name>'}</Text>
-                    <View style={styles.badgeRow}>
-                        {badgeEmojis.map((icon, index) => (
-                            <BadgeIcon key={index} icon={icon} achieved={badgeAchieved[index]} />
-                        ))}
-                    </View>
-                    <View style={styles.badgeRow}>
-                        {badgeEmojistwo.map((icon, index) => (
-                            <BadgeIcon key={index} icon={icon} achieved={badgeAchieved[index]} />
-                        ))}
-                    </View>
-                    <View style={styles.badgeRow}>
-                        {badgeEmojisthree.map((icon, index) => (
-                            <BadgeIcon key={index} icon={icon} achieved={badgeAchieved[index]} />
-                        ))}
-                    </View>
-                </Card>
+                <View style={styles.badgeContainer}>
+                  <Text style={styles.nextBadge}>
+                    Next Badge to collect: {userData.nextBadge}
+                  </Text>
 
-                {/* 4. Navigation Buttons */}
+                  <View style={styles.badgeGrid}>
+                    {Object.entries(userData.badges || {}).map(([key, value]) => {
+                      const badge = allBadges.find((b) => b.id === key);
+                      return (
+                        <View key={key} style={styles.badgeItem}>
+                          <Image
+                            source={{ uri: badge?.img }}
+                            style={[
+                              styles.badgeImage,
+                              !value && { opacity: 1, tintColor: "#9e9e9e" },
+                            ]}
+                          />
+                          <Text style={styles.badgeLabel}>{formatBadgeName(badge?.name)}</Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+                </View>
                 
                 {/* Donate ZAR Button */}
                 <Card 
@@ -117,3 +135,11 @@ export default function HomeScreen() {
         </View>
     );
 }
+
+// Helper function — add this inside same file, below or above component
+const formatBadgeName = (key: string) => {
+  return key
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (str) => str.toUpperCase());
+};
+

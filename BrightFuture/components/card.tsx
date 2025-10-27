@@ -94,25 +94,51 @@ const styles = StyleSheet.create({
         backgroundColor: '#6B8E23', // Olive green for progress
         borderRadius: 6,
     },
-    badgeCard: {
-        alignItems: 'center',
-        paddingVertical: 20,
-    },
-    badgeText: {
-        fontSize: 14,
-        marginBottom: 15,
-        color: '#666',
-        fontWeight: '500',
-    },
-    badgeRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: '100%',
-    },
-    badgeIcon: {
-        fontSize: 24, // Increased size for better visibility
-        marginHorizontal: 2,
-    },
+    loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+    badgeContainer: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    padding: 16,
+    marginVertical: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  nextBadge: {
+    fontSize: 16,
+    color: "#800000",
+    fontWeight: "600",
+    marginBottom: 12,
+    textAlign: "center",
+  },
+  badgeGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+  badgeItem: {
+    width: "30%",       
+    margin: "1.5%",     
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  badgeImage: {
+    width: 70,
+    height: 120,
+    marginBottom: 6,
+  },
+  badgeLabel: {
+    fontSize: 14,
+    color: "#333",
+    fontWeight: "500",
+    textAlign: "center",
+  },
     navButton: {
         flexDirection: 'row',
         justifyContent: 'space-between',

@@ -5,6 +5,8 @@ import { useRouter } from 'expo-router';
 
 // keep your Card component import and styles
 import Card, { styles } from '../components/card';
+import { getAuth } from 'firebase/auth';
+import { unlockUserBadge } from '@/services/dbService';
 
 export default function FoodScreen() {
   const router = useRouter();
@@ -16,9 +18,22 @@ export default function FoodScreen() {
     });
   };
 
-  const openDonateLink = () => {
-    // keep your current Donate ZAR button behavior if it goes somewhere
-    console.log('Donate ZAR button pressed');
+  const openDonateLink = async () => {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    if (!currentUser) return;
+
+    // 1️⃣ Unlock the "food" badge
+    await unlockUserBadge(currentUser.uid, "food");
+
+    // 2️⃣ Determine the next badge (optional, for RewardScreen display)
+    const nextBadge = "clothes"; // for example, next badge you want to show
+
+    // 3️⃣ Navigate to RewardScreen and pass badge info
+    router.push({
+      pathname: "/Rewards",
+      params: { badgeKey: "food", nextBadge },
+    });
   };
 
   return (

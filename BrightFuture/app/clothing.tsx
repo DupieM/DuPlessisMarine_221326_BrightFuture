@@ -1,8 +1,18 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import Card, { styles } from '../components/card';
+import { useRouter } from 'expo-router';
 
 export default function ClothingScreen() {
+
+  const router = useRouter();
+
+  const openDonateLink = () => {
+    router.push({
+      pathname: "/Payement_Screen",
+    });
+  }
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       {/* Header */}
@@ -27,7 +37,7 @@ export default function ClothingScreen() {
                       <View style={styles.line} />
                     </View>
 
-      <Card style={styles.donateButton}>
+      <Card style={styles.donateButton} onPress={openDonateLink}>
         <Text style={styles.donateButtonText}>Donate ZAR</Text>
       </Card>
       <View style={{ height: 80 }} />

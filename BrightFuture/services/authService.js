@@ -1,7 +1,7 @@
 // Firebase Auth Functions
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, getAuth} from "firebase/auth";
 import { auth, db } from "../firebase";
-import { createUserInformation } from "./dbService";
+import { createUserInformation, createUserInformationWithBadges } from "./dbService";
 
 
 // Log In
@@ -36,7 +36,7 @@ export const handleSignin = async (email, password, info) => {
     console.log("Signed In User - " + user.uid);
 
     // Save extra info in Firestore
-    await createUserInformation(info, user.uid);
+    await createUserInformationWithBadges(info, user.uid);
 
     return true; // ✅ Indicate success
   } catch (error) {
