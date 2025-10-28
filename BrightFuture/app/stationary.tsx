@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import Card, { styles } from '../components/card';
+import { getAuth } from 'firebase/auth';
+import { unlockUserBadge } from '@/services/dbService';
 
 export default function StationaryScreen() {
   const router = useRouter();
@@ -11,6 +13,24 @@ export default function StationaryScreen() {
     { name: 'PNA', url: 'https://www.pna.co.za' },
     { name: 'Takealot', url: 'https://www.takealot.com' },
   ];
+
+  const openDonateLink = async () => {
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+      if (!currentUser) return;
+
+      // 1️⃣ Unlock the "food" badge
+      await unlockUserBadge(currentUser.uid, "Stationary");
+
+      // 2️⃣ Determine the next badge (optional, for RewardScreen display)
+      const nextBadge = "Volunteer"; // for example, next badge you want to show
+
+      // 3️⃣ Navigate to RewardScreen and pass badge info
+      router.push({
+        pathname: "/Rewards",
+        params: { badgeKey: "Stationary", nextBadge },
+      });
+    };
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
@@ -58,7 +78,7 @@ export default function StationaryScreen() {
                       </View>
 
 
-      <Card style={styles.donateButton}>
+      <Card style={styles.donateButton}  onPress={openDonateLink}>
         <Text style={styles.donateButtonText}>Donate ZAR</Text>
       </Card>
       <View style={{ height: 80 }} />

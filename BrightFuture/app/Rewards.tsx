@@ -54,8 +54,8 @@ export default function RewardScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  header: { fontSize: 24, fontWeight: "bold", marginBottom: 20 },
-  badgeImage: { width: 150, height: 150, marginBottom: 10 },
-  badgeName: { fontSize: 20, marginBottom: 10 },
+  header: { fontSize: 24, fontWeight: "bold", marginBottom: 20, color: "#555" },
+  badgeImage: { width: 150, height: 255, marginBottom: 10 },
+  badgeName: { fontSize: 20, marginBottom: 10, color: "#555" },
   nextBadge: { fontSize: 16, color: "#555" },
 });

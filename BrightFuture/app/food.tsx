@@ -24,7 +24,7 @@ export default function FoodScreen() {
     if (!currentUser) return;
 
     // 1️⃣ Unlock the "food" badge
-    await unlockUserBadge(currentUser.uid, "food");
+    await unlockUserBadge(currentUser.uid, "Food");
 
     // 2️⃣ Determine the next badge (optional, for RewardScreen display)
     const nextBadge = "clothes"; // for example, next badge you want to show
@@ -32,7 +32,7 @@ export default function FoodScreen() {
     // 3️⃣ Navigate to RewardScreen and pass badge info
     router.push({
       pathname: "/Rewards",
-      params: { badgeKey: "food", nextBadge },
+      params: { badgeKey: "Food", nextBadge },
     });
   };
 

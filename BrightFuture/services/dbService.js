@@ -66,23 +66,25 @@ export const getBadges = async () => {
 export const createUserInformationWithBadges = async (info, uid) => {
   console.log("...creating user with badges");
   try {
-    // 1️⃣ Get all badges from the "badges" collection
+    // Get all badges from the "badges" collection
     const badgesSnapshot = await getDocs(collection(db, "badges"));
     const badgesStatus = {};
 
-    badgesSnapshot.forEach((doc) => {
-      badgesStatus[doc.id] = false; // initialize all badges as locked (false)
+    badgesSnapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const badgeName = data.name || docSnap.id; // fallback to ID if name missing
+      badgesStatus[badgeName] = false; // store under the name instead of id
     });
 
-    // 2️⃣ Merge user info and badges
+    // Merge user info and badges
     const userData = {
       ...info,
       badges: badgesStatus,
     };
 
-    // 3️⃣ Save to Firestore
+    // Save to Firestore
     await setDoc(doc(db, "users", uid), userData);
-    console.log("✅ User with badges successfully created");
+    console.log("✅ User with badges successfully created (by name)");
   } catch (e) {
     console.error("❌ Error creating user with badges:", e);
   }

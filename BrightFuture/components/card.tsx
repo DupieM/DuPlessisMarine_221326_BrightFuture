@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   badgeImage: {
-    width: 70,
-    height: 120,
+    width: 53,
+    height: 90,
     marginBottom: 6,
   },
   badgeLabel: {
