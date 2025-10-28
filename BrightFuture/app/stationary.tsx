@@ -35,8 +35,8 @@ export default function StationaryScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       {/* Header */}
-      <View style={styles.foodHeader}>
-        <Text style={styles.foodTitle}>Stationary</Text>
+      <View style={styles.foodHeaderthree}>
+        <Text style={styles.foodTitlethree}>Stationary</Text>
       </View>
 
       <View style={styles.contentSection}>
@@ -51,7 +51,7 @@ export default function StationaryScreen() {
 
       <View style={styles.contentSection}>
         
-        <Text style={styles.noteText}>*Note use the address below as the delivery address</Text>
+        <Text style={styles.noteTexttwo}>*Note use the address below as the delivery address</Text>
         <View style={styles.addressBox}>
           <Text style={styles.addressText}>
             Ivanhoe Street 3, Gardens,{"\n"}Cape Town, 8001, South Africa
@@ -78,7 +78,7 @@ export default function StationaryScreen() {
                       </View>
 
 
-      <Card style={styles.donateButton}  onPress={openDonateLink}>
+      <Card style={styles.donateButton}  onPress={() => router.push("/PaymentScreen")}>
         <Text style={styles.donateButtonText}>Donate ZAR</Text>
       </Card>
       <View style={{ height: 80 }} />

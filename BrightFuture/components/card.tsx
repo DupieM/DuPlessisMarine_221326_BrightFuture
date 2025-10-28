@@ -47,6 +47,11 @@ const styles = StyleSheet.create({
     },
 
     // --- 1. Home Screen Styles (Donor Dashboard) ---
+    image: {
+        width: 40,
+        height: 50,
+        marginRight: 20
+    },
     headerContainer: {
         width: width + 40, 
         height: 200, 
@@ -94,7 +99,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#6B8E23', // Olive green for progress
         borderRadius: 6,
     },
-    loadingContainer: {
+    progressBarText: {
+      fontStyle: 'italic',
+      marginTop: 20,
+      fontSize: 20,
+      color: "#4682B4",
+    },
+  loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -183,10 +194,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     categoryIcon: {
-        fontSize: 60,
-        opacity: 0.6,
-        color: 'rgba(255, 255, 255, 0.8)',
-        marginTop: -70,
+        width: 70,
+        height: 70,
+        marginTop: -50,
         left: 20
     },
     categoryTitle: {
@@ -199,17 +209,19 @@ const styles = StyleSheet.create({
     },
     optionsButton: {
         backgroundColor: '#006A80',
-        paddingHorizontal: 15,
+        paddingHorizontal: 27,
         paddingVertical: 8,
-        borderRadius: 20,
+        borderRadius: 70,
         position: 'absolute',
         right: 15,
         top: -10,
+        width: 140,
+        height: 50
     },
     optionsButtonText: {
         color: '#FFFFFF',
         fontWeight: '600',
-        fontSize: 14,
+        fontSize: 24,
     },
 
     // --- 3. Food Screen Styles ---
@@ -358,6 +370,50 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
+
+    // --- 4. Clothes Screen Styles ---
+    foodHeadertwo: {
+        backgroundColor: '#E0AC62', // Earthy brown/orange tone from mockup
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        width: width + 20,
+        marginLeft: -20,
+        alignItems: 'flex-start',
+        marginBottom: 30,
+    },
+    foodTitletwo: {
+        fontSize: 52,
+        fontWeight: 'bold',
+        color: '#ffffffff',
+        marginTop: 20,
+        marginLeft: 60
+    },
+
+    // --- 5. Stationary Screen Styles ---
+    foodHeaderthree: {
+        backgroundColor: '#A0AA61', // Earthy brown/orange tone from mockup
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        width: width + 20,
+        marginLeft: -20,
+        alignItems: 'flex-start',
+        marginBottom: 30,
+    },
+    foodTitlethree: {
+        fontSize: 52,
+        fontWeight: 'bold',
+        color: '#ffffffff',
+        marginTop: 20,
+        marginLeft: 40
+    },
+    noteTexttwo: {
+        fontSize: 14,
+        fontStyle: 'italic',
+        marginTop: 80,
+        color: '#800000', // Deep red for emphasis
+        textAlign: 'center',
+    },
+
 
     //
     storeButton: {

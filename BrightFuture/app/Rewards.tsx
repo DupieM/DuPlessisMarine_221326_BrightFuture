@@ -36,11 +36,13 @@ export default function RewardScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>🎉 Congratulations! 🎉</Text>
+      <Text style={styles.icon}>🎉</Text>
+      <Text style={styles.header}>Congratulations!</Text>
       {badge && (
         <>
           <Image source={{ uri: badge.img }} style={styles.badgeImage} />
-          <Text style={styles.badgeName}>You earned: {formatBadgeName(badge.name)}</Text>
+          <Text style={styles.badgeName}>You earned the</Text>
+          <Text style={styles.badgeNametwo}>{formatBadgeName(badge.name)} badge</Text>
         </>
       )}
       {nextBadge && (
@@ -53,9 +55,44 @@ export default function RewardScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  header: { fontSize: 24, fontWeight: "bold", marginBottom: 20, color: "#555" },
-  badgeImage: { width: 150, height: 255, marginBottom: 10 },
-  badgeName: { fontSize: 20, marginBottom: 10, color: "#555" },
-  nextBadge: { fontSize: 16, color: "#555" },
+  container: { 
+    flex: 1, 
+    justifyContent: "center", 
+    alignItems: "center",
+    backgroundColor: '#d0d5a9ff'
+  },
+  icon: {
+    fontSize: 100,
+    marginBottom: 20
+  },
+  header: { 
+    fontSize: 44, 
+    fontWeight: "bold", 
+    marginBottom: 20, 
+    color: "#000000" 
+  },
+  badgeImage: { 
+    width: 152, 
+    height: 256, 
+    marginBottom: 10 
+  },
+  badgeName: { 
+    fontSize: 30, 
+    marginBottom: 10, 
+    color: "#000000",
+    textAlign: "center",
+  },
+  badgeNametwo: { 
+    fontSize: 34, 
+    fontWeight: '900',
+    marginBottom: 30, 
+    color: "#000000",
+    textAlign: "center",
+  },
+  nextBadge: { 
+    fontSize: 24, 
+    color: "#000000",
+    fontStyle: 'italic',
+    marginBottom: 50
+  },
 });

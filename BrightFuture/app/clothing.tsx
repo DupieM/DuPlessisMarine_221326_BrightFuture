@@ -8,8 +8,8 @@ export default function ClothingScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       {/* Header */}
-      <View style={styles.foodHeader}>
-        <Text style={styles.foodTitle}>Clothing</Text>
+      <View style={styles.foodHeadertwo}>
+        <Text style={styles.foodTitletwo}>Clothing</Text>
       </View>
 
       <View style={styles.contentSection}>

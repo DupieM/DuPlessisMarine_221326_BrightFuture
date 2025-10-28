@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useRouter, router } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import Card, { styles, width } from '../../components/card';
 import { getBadges, getUserInfo } from '@/services/dbService';
@@ -8,7 +8,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const totalDonated = 50000;
+  const totalDonated = 100000;
   const targetGoal = 300000;
   const progress = (totalDonated / targetGoal) * 100;
 
@@ -71,12 +71,13 @@ export default function HomeScreen() {
           <View style={styles.progressBarBackground}>
             <View style={[styles.progressBarFill, { width: `${Math.min(progress, 100)}%` }]} />
           </View>
+          <Text style={styles.progressBarText}>See how close we are to reaching our fundraising target!</Text>
         </Card>
 
         {/* Badges Section */}
         <View style={styles.badgeContainer}>
           <Text style={styles.nextBadge}>
-            Next Badge to collect: {formatBadgeName(userData.nextBadge || 'None')}
+            Badge you have so far
           </Text>
 
           <View style={styles.badgeGrid}>
@@ -103,9 +104,12 @@ export default function HomeScreen() {
         </View>
 
         {/* Donate Button */}
-        <Card style={[styles.navButton, { backgroundColor: '#D2754F' }]} onPress={() => router.push('/')}>
+        <Card style={[styles.navButton, { backgroundColor: '#D2754F' }]} onPress={() => router.push("/PaymentScreen")}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.buttonEmoji}>💵</Text>
+            <Image
+              source={require('../../assets/images/dashboard/ZAR.png')}
+              style={styles.image}
+            />
             <Text style={[styles.navButtonText, { marginLeft: 10 }]}>Donate ZAR</Text>
           </View>
           <FontAwesome name="chevron-right" size={16} color="#fff" />
@@ -114,7 +118,10 @@ export default function HomeScreen() {
         {/* Donations Button */}
         <Card style={[styles.navButton, { backgroundColor: '#A0AA61' }]} onPress={() => router.push('/categories')}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.buttonEmoji}>🎁</Text>
+            <Image
+              source={require('../../assets/images/donate.png')}
+              style={styles.image}
+            />
             <Text style={[styles.navButtonText, { marginLeft: 10 }]}>Donations</Text>
           </View>
           <FontAwesome name="chevron-right" size={16} color="#fff" />
@@ -123,7 +130,10 @@ export default function HomeScreen() {
         {/* Volunteer Button */}
         <Card style={[styles.navButton, { backgroundColor: '#4EA8BA' }]} onPress={() => router.push('/volunteer')}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.buttonEmoji}>🧑‍🤝‍🧑</Text>
+            <Image
+              source={require('../../assets/images/hands.png')}
+              style={styles.image}
+            />
             <Text style={[styles.navButtonText, { marginLeft: 10 }]}>Volunteer Work</Text>
           </View>
           <FontAwesome name="chevron-right" size={16} color="#fff" />
