@@ -50,36 +50,37 @@ export const handleSignin = async (email, password, info) => {
 };
 
 // Google Login
-WebBrowser.maybeCompleteAuthSession();
+// WebBrowser.maybeCompleteAuthSession();
 
-export function useGoogleAuth() {
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: process.env.GOOGLE_WEB_CLIENT_ID,
-    webClientId: process.env.GOOGLE_WEB_CLIENT_ID,
-  });
+// export function useGoogleAuth() {
+//   const [request, response, promptAsync] = Google.useAuthRequest({
+//     expoClientId: process.env.GOOGLE_WEB_CLIENT_ID,
+//     webClientId: process.env.GOOGLE_WEB_CLIENT_ID,
+//     androidClientId: process.env.ANDROID_CLIENT_ID
+//   });
 
-  useEffect(() => {
-    if (response?.type === 'success') {
-      const { id_token } = response.params;
-      const credential = GoogleAuthProvider.credential(id_token);
-      signInWithCredential(auth, credential).then(async (userCredential) => {
-        const user = userCredential.user;
-        const userRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(userRef);
-        if (!docSnap.exists()) {
-          await setDoc(userRef, {
-            name: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
-            badges: {},
-          });
-        }
-      });
-    }
-  }, [response]);
+//   useEffect(() => {
+//     if (response?.type === 'success') {
+//       const { id_token } = response.params;
+//       const credential = GoogleAuthProvider.credential(id_token);
+//       signInWithCredential(auth, credential).then(async (userCredential) => {
+//         const user = userCredential.user;
+//         const userRef = doc(db, 'users', user.uid);
+//         const docSnap = await getDoc(userRef);
+//         if (!docSnap.exists()) {
+//           await setDoc(userRef, {
+//             name: user.displayName,
+//             email: user.email,
+//             photoURL: user.photoURL,
+//             badges: {},
+//           });
+//         }
+//       });
+//     }
+//   }, [response]);
 
-  return { promptAsync };
-}
+//   return { promptAsync };
+// }
 
 // facebook Login
 export async function signInWithFacebook() {
