@@ -18,9 +18,9 @@
       "userInterfaceStyle": "dark",
       "package": "com.anonymous.BrightFuture",
       "adaptiveIcon": {
-                "foregroundImage": "./assets/images/icon.png",
-                "backgroundColor": "#FFFFFF"
-              }
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
     },
     "web": {
       "output": "static",
@@ -42,7 +42,8 @@
         }
       ],
       "expo-font",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-facebook"
     ],
     "experiments": {
       "typedRoutes": true,

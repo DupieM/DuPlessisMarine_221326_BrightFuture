@@ -5,7 +5,7 @@ import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
 
 // 1. Import the useAuth hook from the root layout file
 import { useAuth } from '../_layout'; 
-import { handleLogin, resetPassword } from '@/services/authService';
+import { handleLogin, resetPassword, signInWithFacebook, useGoogleAuth } from '@/services/authService';
 
 export default function LoginScreen() {
 
@@ -13,6 +13,8 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const { promptAsync: promptGoogle } = useGoogleAuth();
 
   // ---- Sign In with Firebase ----
   const onLogin = async () => {
@@ -59,6 +61,30 @@ export default function LoginScreen() {
    // ---- Guest Login ----
   const handleContinueGuest = () => {
     signInAsGuest();
+  };
+
+  // ---- Google Login ----
+  const handleGoogleLogin = async () => {
+    try {
+      const user = await promptGoogle(); // your existing Google auth
+      if (user) {
+        Alert.alert('Welcome!', 'You are now signed in with Google!');
+        router.replace('/(tabs)'); // Navigate to tabs
+      }
+    } catch (error) {
+      Alert.alert('Login Failed', String(error));
+    }
+  };
+
+  // ---- Facebook Login ----
+  const handleFacebookLogin = async () => {
+    try {
+      await signInWithFacebook(); // no return value needed
+      Alert.alert('Welcome!', 'You are now signed in with Facebook!');
+      router.replace('/(tabs)'); // Navigate to tabs
+    } catch (error) {
+      Alert.alert('Login Failed', String(error));
+    }
   };
 
   const goToSignup = () => {
@@ -113,12 +139,12 @@ export default function LoginScreen() {
 
         {/* Social Buttons */}
         <View style={styles.socialContainer}>
-          <TouchableOpacity style={styles.socialBtn}>
+          <TouchableOpacity style={styles.socialBtn} onPress={handleGoogleLogin}>
             <AntDesign name="google" size={22} color="#000" />
             <Text style={styles.socialText}>Google</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.socialBtn}>
+          <TouchableOpacity style={styles.socialBtn} onPress={handleFacebookLogin}>
             <FontAwesome name="facebook" size={22} color="#000" />
             <Text style={styles.socialText}>Facebook</Text>
           </TouchableOpacity>
