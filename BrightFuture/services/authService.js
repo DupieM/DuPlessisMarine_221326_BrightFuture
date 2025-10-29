@@ -5,8 +5,13 @@ import { createUserInformation, createUserInformationWithBadges } from "./dbServ
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as Facebook from 'expo-facebook';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDocs } from 'firebase/firestore';
+import { router } from 'expo-router';
+import Constants from 'expo-constants';
 
+const FACEBOOK_APP_ID = '689340150456661';
+console.log('Facebook App ID:', FACEBOOK_APP_ID);
+console.log('Full Expo Config:', Constants.expoConfig);
 
 // Log In
 export const handleLogin = async (email, password) => {
@@ -49,6 +54,43 @@ export const handleSignin = async (email, password, info) => {
   }
 };
 
+// facebook Login
+export const signInWithFacebook = async () => {
+  try {
+    await Facebook.initializeAsync({ appId: FACEBOOK_APP_ID });
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync({
+      permissions: ['public_profile', 'email'],
+    });
+
+    if (type === 'success' && token) {
+      const auth = getAuth();
+      const credential = FacebookAuthProvider.credential(token);
+      const userCredential = await signInWithCredential(auth, credential);
+
+      // Firebase user info
+      const uid = userCredential.user.uid;
+      const info = {
+        displayName: userCredential.user.displayName || '',
+        email: userCredential.user.email || '',
+      };
+
+      // Create user with badges if not exist
+      const userDoc = doc(db, 'users', uid);
+      const userSnap = await getDocs(collection(db, 'users'));
+      if (!userSnap.docs.find(d => d.id === uid)) {
+        await createUserInformationWithBadges(info, uid);
+      }
+
+      // Navigate to tabs
+      router.replace('/(tabs)');
+    } else {
+      console.log('Facebook login cancelled');
+    }
+  } catch (err) {
+    console.log('Facebook login error:', err);
+  }
+};
+
 // Google Login
 // WebBrowser.maybeCompleteAuthSession();
 
@@ -81,35 +123,3 @@ export const handleSignin = async (email, password, info) => {
 
 //   return { promptAsync };
 // }
-
-// facebook Login
-export async function signInWithFacebook() {
-  try {
-    await Facebook.initializeAsync({
-      appId: process.env.FACEBOOK_APP_ID,
-    });
-
-    const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-      permissions: ['public_profile', 'email'],
-    });
-
-    if (type === 'success') {
-      const credential = FacebookAuthProvider.credential(token);
-      const userCredential = await signInWithCredential(auth, credential);
-      const user = userCredential.user;
-
-      const userRef = doc(db, 'users', user.uid);
-      const docSnap = await getDoc(userRef);
-      if (!docSnap.exists()) {
-        await setDoc(userRef, {
-          name: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-          badges: {},
-        });
-      }
-    }
-  } catch (error) {
-    console.log('Facebook sign-in error:', error);
-  }
-}
