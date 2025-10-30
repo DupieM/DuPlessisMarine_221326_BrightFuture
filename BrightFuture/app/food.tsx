@@ -1,15 +1,39 @@
 // app/(tabs)/FoodScreen.tsx
-import React from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
-
-// keep your Card component import and styles
 import Card, { styles } from '../components/card';
 import { getAuth } from 'firebase/auth';
 import { unlockUserBadge } from '@/services/dbService';
+import { getFoods } from '@/services/dbService';
+
+type Badge = {
+  id: string;
+  name: string;
+  img?: string;
+};
 
 export default function FoodScreen() {
   const router = useRouter();
+  const [badges, setBadges] = useState<Badge[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [unlockedBadges, setUnlockedBadges] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    const fetchBadges = async () => {
+      try {
+        const foods = await getFoods();
+        setBadges(foods as Badge[]);
+        // Optionally, you can fetch which badges the user has unlocked here
+        // For now, all badges are locked until unlocked
+      } catch (err) {
+        console.error("Error fetching badges:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBadges();
+  }, []);
 
   const goToStore = (store: 'checkers' | 'picknpay') => {
     router.push({
@@ -23,18 +47,32 @@ export default function FoodScreen() {
     const currentUser = auth.currentUser;
     if (!currentUser) return;
 
-    // 1️⃣ Unlock the "food" badge
+    // Unlock the "Food" badge
     await unlockUserBadge(currentUser.uid, "Food");
 
-    // 2️⃣ Determine the next badge (optional, for RewardScreen display)
+    // Update local state so the UI shows it unlocked immediately
+    setUnlockedBadges((prev) => ({ ...prev, Food: true }));
+
     const nextBadge = "clothes"; // for example, next badge you want to show
 
-    // 3️⃣ Navigate to RewardScreen and pass badge info
     router.push({
       pathname: "/Rewards",
       params: { badgeKey: "Food", nextBadge },
     });
   };
+
+  const formatBadgeName = (name: string) => {
+    // Simple formatting: capitalize first letter
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  };
+
+  if (loading) {
+    return (
+      <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
@@ -44,27 +82,36 @@ export default function FoodScreen() {
       </View>
 
       <View style={styles.contentSection}>
-        <Text style={styles.sectionHeading}>
-          Non Perishable Products that you can donate
-        </Text>
-        <Text style={styles.bulletPoint}>• Canned fruits</Text>
-        <Text style={styles.bulletPoint}>• Canned vegetables</Text>
-        <Text style={styles.bulletPoint}>• Cereal</Text>
-        <Text style={styles.bulletPoint}>• Dried Fruit</Text>
-        <Text style={styles.bulletPoint}>• Canned Food</Text>
-        <Text style={styles.bulletPoint}>• Rice</Text>
-        <Text style={styles.bulletPoint}>• Powdered Milk</Text>
+        <Text style={styles.sectionHeading}>Non Perishable Products that you can donate</Text>
+        <View style={styles.badgeGridTwo}>
+          {badges.map((badge) => {
+            const isUnlocked = unlockedBadges[badge.name] || false;
+            return (
+              <View key={badge.id} style={styles.badgeItemTwo}>
+                {badge.img ? (
+                  <Image
+                    source={{ uri: badge.img }}
+                    style={styles.badgeImageTwo}
+                  />
+                ) : (
+                  <View style={[styles.badgeImageTwo, { backgroundColor: '#eee' }]} />
+                )}
+                <Text style={styles.badgeLabelTwo}>{formatBadgeName(badge.name)}</Text>
+              </View>
+            );
+          })}
+        </View>
       </View>
+
+      {/* Grocery delivery section */}
+      <Text style={styles.sectionHeading}>Buy from grocery stores & deliver to us</Text>
 
       <View style={styles.contentSection}>
         <Image
-          source={{
-            uri: 'https://placehold.co/150x50/800000/ffffff?text=GROCERY+DELIVERY',
-          }}
+          source={{ uri: 'https://placehold.co/150x50/800000/ffffff?text=GROCERY+DELIVERY' }}
           style={styles.logoImage}
           resizeMode="contain"
         />
-
         <Text style={styles.noteText}>*Use the address below as the delivery address</Text>
         <View style={styles.addressBox}>
           <Text style={styles.addressText}>
@@ -73,34 +120,24 @@ export default function FoodScreen() {
         </View>
       </View>
 
-      <Text style={styles.sectionHeading}>
-          Buy from grocery stores and deliver to us
-      </Text>
-
-      {/* --- NEW: Two buttons for in-app webviews --- */}
+      {/* Store buttons */}
       <View style={{ marginVertical: 10, gap: 10 }}>
-        <TouchableOpacity
-          style={styles.storeButton}
-          onPress={() => goToStore('checkers')}>
-          <Text style={styles.storeButtonText}>Open Checkers 60x60</Text>
+        <TouchableOpacity style={styles.storeButton} onPress={() => goToStore('checkers')}>
+          <Text style={styles.storeButtonText}>Checkers Sixty60</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.storeButton}
-          onPress={() => goToStore('picknpay')}>
-          <Text style={styles.storeButtonText}>Open Pick n Pay ASAP!</Text>
+        <TouchableOpacity style={styles.storeButton} onPress={openDonateLink}>
+          <Text style={styles.storeButtonText}>Pick n Pay ASAP!</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.dividerContainer}>
-                <View style={styles.line} />
-                <Text style={styles.orText}>or</Text>
-                <View style={styles.line} />
-              </View>
+        <View style={styles.line} />
+        <Text style={styles.orText}>or</Text>
+        <View style={styles.line} />
+      </View>
 
-      {/* keep your original Donate ZAR Card */}
-
-      <Card style={styles.donateButton} onPress={openDonateLink}>
+      <Card style={styles.donateButton} onPress={() => router.push("/PaymentScreen")}>
         <Text style={styles.donateButtonText}>Donate ZAR</Text>
       </Card>
 

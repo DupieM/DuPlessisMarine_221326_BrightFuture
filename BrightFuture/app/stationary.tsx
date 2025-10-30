@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import Card, { styles } from '../components/card';
 import { getAuth } from 'firebase/auth';
-import { unlockUserBadge } from '@/services/dbService';
+import { getStationaries, unlockUserBadge } from '@/services/dbService';
+
+type Badge = {
+  id: string;
+  name: string;
+  img?: string;
+};
 
 export default function StationaryScreen() {
   const router = useRouter();
@@ -13,6 +19,31 @@ export default function StationaryScreen() {
     { name: 'PNA', url: 'https://www.pna.co.za' },
     { name: 'Takealot', url: 'https://www.takealot.com' },
   ];
+
+  const [stationaries, setStationaries] = useState<Badge[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [unlockedBadges, setUnlockedBadges] = useState<Record<string, boolean>>({});
+  
+    useEffect(() => {
+      const fetchStationaries = async () => {
+        try {
+          const stationaries = await getStationaries();
+          setStationaries(stationaries as Badge[]);
+          // Optionally, you can fetch which badges the user has unlocked here
+          // For now, all badges are locked until unlocked
+        } catch (err) {
+          console.error("Error fetching badges:", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchStationaries();
+    }, []);
+
+    const formatBadgeName = (name: string) => {
+      // Simple formatting: capitalize first letter
+      return name.charAt(0).toUpperCase() + name.slice(1);
+    };
 
   const openDonateLink = async () => {
       const auth = getAuth();
@@ -40,14 +71,28 @@ export default function StationaryScreen() {
       </View>
 
       <View style={styles.contentSection}>
-        <Text style={styles.sectionHeading}>School Products:</Text>
-        <Text style={styles.bulletPoint}>• Pencils</Text>
-        <Text style={styles.bulletPoint}>• Markers</Text>
-        <Text style={styles.bulletPoint}>• Scissors</Text>
-        <Text style={styles.bulletPoint}>• Glue</Text>
-        <Text style={styles.bulletPoint}>• Folders</Text>
-        <Text style={styles.bulletPoint}>• Stamps</Text>
+        <Text style={styles.sectionHeading}>School Products that you can donate</Text>
+        <View style={styles.badgeGridTwo}>
+          {stationaries.map((badge) => {
+            const isUnlocked = unlockedBadges[badge.name] || false;
+              return (
+                <View key={badge.id} style={styles.badgeItemThree}>
+                  {badge.img ? (
+                    <Image
+                      source={{ uri: badge.img }}
+                      style={styles.badgeImageTwo}
+                    />
+                  ) : (
+                    <View style={[styles.badgeImageTwo, { backgroundColor: '#eee' }]} />
+                  )}
+                  <Text style={styles.badgeLabelTwo}>{formatBadgeName(badge.name)}</Text>
+                </View>
+              );
+            })}
+          </View>
       </View>
+
+      <Text style={styles.sectionHeading}>Buy from stationary stores & deliver to us</Text>
 
       <View style={styles.contentSection}>
         
@@ -58,8 +103,6 @@ export default function StationaryScreen() {
           </Text>
         </View>
       </View>
-
-      <Text style={styles.sectionHeading}>Buy from stationary stores and deliver to us</Text>
 
         {stores.map((store) => (
           <TouchableOpacity

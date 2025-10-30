@@ -12,8 +12,10 @@ export default function Step4() {
         />
 
       <Text style={styles.title}>Earn Rewards with Donating</Text>
-       <Text style={styles.subtitle}>
+        <Text style={styles.subtitle}>
             Earn badges when donating while helping children in need
+        </Text>
+        <Text>
             Note you need to create an account to earn rewards
         </Text>
         </View>

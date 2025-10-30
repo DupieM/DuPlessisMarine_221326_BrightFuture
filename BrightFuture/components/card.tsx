@@ -288,11 +288,11 @@ const styles = StyleSheet.create({
         marginLeft: 100
     },
     contentSection: {
-        marginBottom: -65,
+        marginBottom: 20,
         paddingHorizontal: 5,
     },
     sectionHeading: {
-        fontSize: 18,
+        fontSize: 17,
         fontWeight: '600',
         marginBottom: 10,
         color: '#333',
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
     noteText: {
         fontSize: 14,
         fontStyle: 'italic',
-        marginTop: 15,
+        marginTop: -75,
         color: '#800000', // Deep red for emphasis
         textAlign: 'center',
     },
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderLeftWidth: 4,
         borderColor: '#C49E67',
-        marginBottom: 90
+        marginBottom: -10
     },
     addressText: {
         fontSize: 16,
@@ -360,6 +360,28 @@ const styles = StyleSheet.create({
         color: '#D9A19A',
         fontStyle: 'italic',
     },
+    badgeGridTwo: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+  badgeItemTwo: {
+    width: "20%",       
+    margin: "2%",     
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  badgeImageTwo: {
+    width: 60,
+    height: 60,
+    marginBottom: 6,
+  },
+  badgeLabelTwo: {
+    fontSize: 12,
+    color: "#333",
+    fontWeight: "500",
+    textAlign: "center",
+  },
 
     // --- 4. Food Online Link Screen Styles ---
     onlineContainer: {
@@ -434,6 +456,19 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 60
     },
+    noteTextThree: {
+        fontSize: 14,
+        fontStyle: 'italic',
+        marginTop: 10,
+        color: '#800000', // Deep red for emphasis
+        textAlign: 'center',
+    },
+    badgeItemThree: {
+    width: "25%",       
+    margin: "2%",     
+    alignItems: "center",
+    marginBottom: 15,
+  },
 
     // --- 5. Stationary Screen Styles ---
     foodHeaderthree: {
@@ -455,7 +490,7 @@ const styles = StyleSheet.create({
     noteTexttwo: {
         fontSize: 14,
         fontStyle: 'italic',
-        marginTop: 80,
+        marginTop: 5,
         color: '#800000', // Deep red for emphasis
         textAlign: 'center',
     },

@@ -62,6 +62,43 @@ export const getBadges = async () => {
   return allBadges;
 };
 
+// fetch food
+export const getFoods = async () => {
+  const allFoods = [];
+
+  const querySnapshot = await getDocs(collection(db, "food")); // ✅ use "badges" collection
+  querySnapshot.forEach((doc) => {
+    allFoods.push({ ...doc.data(), id: doc.id });
+  });
+
+  return allFoods;
+};
+
+// fetch clothes
+export const getClothes = async () => {
+  const allClothes = [];
+
+  const querySnapshot = await getDocs(collection(db, "clothes")); // ✅ use "badges" collection
+  querySnapshot.forEach((doc) => {
+    allClothes.push({ ...doc.data(), id: doc.id });
+  });
+
+  return allClothes;
+};
+
+// fetch stationary
+export const getStationaries = async () => {
+  const allStationaries = [];
+
+  const querySnapshot = await getDocs(collection(db, "stationaries")); // ✅ use "badges" collection
+  querySnapshot.forEach((doc) => {
+    allStationaries.push({ ...doc.data(), id: doc.id });
+  });
+
+  return allStationaries;
+};
+
+
 // Create user info and initialize badges
 export const createUserInformationWithBadges = async (info, uid) => {
   console.log("...creating user with badges");
