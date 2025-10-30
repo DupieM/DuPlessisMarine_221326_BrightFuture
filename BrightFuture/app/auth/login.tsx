@@ -1,21 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import { router } from 'expo-router';
-import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
-
-// Hooks & services
-import { useAuth } from '../_layout'; 
-import { handleLogin, resetPassword} from '@/services/authService'; // ✅ added
-
-// Google Login
-import * as Google from 'expo-auth-session/providers/google';
-import * as WebBrowser from 'expo-web-browser';
-import { saveSocialUserToFirestore } from '@/services/authService';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { useAuth } from '../_layout';
+import { handleLogin, resetPassword, saveSocialUserToFirestore } from '@/services/authService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Google from 'expo-auth-session/providers/google';
+import * as Facebook from 'expo-auth-session/providers/facebook';
+import * as WebBrowser from 'expo-web-browser';
+import * as AuthSession from 'expo-auth-session';
 
 WebBrowser.maybeCompleteAuthSession();
-
-// Facebook Login
 
 export default function LoginScreen() {
   const { signInAsGuest } = useAuth();
@@ -23,7 +18,7 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // ---- Email/Password Login ----
+  // ---------- Email/Password Login ----------
   const onLogin = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please enter both email and password');
@@ -32,13 +27,10 @@ export default function LoginScreen() {
     setLoading(true);
     try {
       const user = await handleLogin(email, password);
-      if (user) {
-        Alert.alert('Welcome back!', 'You are now signed in!');
-        router.replace('/(tabs)');
-      }
-    } catch (error) {
+      if (user) router.replace('/(tabs)');
+    } catch (error: any) {
       let errorMessage = 'Something went wrong. Please try again.';
-      if (error && typeof error === 'object' && 'code' in error) {
+      if (error.code) {
         switch (error.code) {
           case 'auth/invalid-email':
             errorMessage = 'Invalid email address.';
@@ -58,7 +50,7 @@ export default function LoginScreen() {
     }
   };
 
-  // ---- Reset Password ----
+  // ---------- Reset Password ----------
   const onResetPassword = async () => {
     if (!email) {
       Alert.alert('Missing Email', 'Enter your email to reset your password.');
@@ -67,66 +59,87 @@ export default function LoginScreen() {
     try {
       await resetPassword(email);
       Alert.alert('Check your inbox', 'A password reset email has been sent.');
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert('Error', error.message);
-      } else {
-        Alert.alert('Error', String(error));
-      }
+    } catch (error: any) {
+      Alert.alert('Error', error.message);
     }
   };
 
-  // ---- Guest Login ----
-  const handleContinueGuest = () => {
-    signInAsGuest();
-  };
+  // ---------- Guest Login ----------
+  const handleContinueGuest = () => signInAsGuest();
 
-  // Google Login 
-
-  const GOOGLE_CLIENT_ID = '82901784559-eabhpq29nteggag89cqdnf4tkp6tmfv7.apps.googleusercontent.com'
-
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId: GOOGLE_CLIENT_ID, // your single client ID
+  // ---------- Google Login ----------
+  const GOOGLE_CLIENT_ID = '82901784559-eabhpq29nteggag89cqdnf4tkp6tmfv7.apps.googleusercontent.com'; // replace with Web client ID
+  const [googleRequest, googleResponse, promptGoogle] = Google.useAuthRequest({
+    clientId: GOOGLE_CLIENT_ID,
     scopes: ['profile', 'email'],
   });
 
-  React.useEffect(() => {
-    if (response?.type === 'success' && response.authentication?.accessToken) {
-      fetchGoogleUser(response.authentication.accessToken);
+  useEffect(() => {
+    if (googleResponse?.type === 'success' && googleResponse.authentication?.accessToken) {
+      handleGoogleLogin(googleResponse.authentication.accessToken);
     }
-  }, [response]);
+  }, [googleResponse]);
 
-  const fetchGoogleUser = async (accessToken: string) => {
+  const handleGoogleLogin = async (accessToken: string) => {
     try {
       const res = await fetch('https://www.googleapis.com/userinfo/v2/me', {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
       const userInfo = await res.json();
-
       await saveSocialUserToFirestore(userInfo.id, {
         name: userInfo.name,
         email: userInfo.email,
         picture: userInfo.picture,
         provider: 'google',
       });
-
       await AsyncStorage.setItem('user', JSON.stringify(userInfo));
       router.replace('/(tabs)');
     } catch (err) {
-      console.error(err);
+      console.error('Google login failed:', err);
     }
   };
 
+  // ---------- Facebook Login ----------
+  const FACEBOOK_APP_ID = '689340150456661';
+  const [fbRequest, fbResponse, fbPromptAsync] = Facebook.useAuthRequest({
+    clientId: FACEBOOK_APP_ID,
+    scopes: ['public_profile', 'email'],
+    redirectUri: AuthSession.makeRedirectUri({ scheme: 'myapp' }), // ✅ correct
+  });
+
+  useEffect(() => {
+    if (fbResponse?.type === 'success' && fbResponse.params.access_token) {
+      handleFacebookLogin(fbResponse.params.access_token);
+    }
+  }, [fbResponse]);
+
+  const handleFacebookLogin = async (token: string) => {
+    try {
+      const res = await fetch(
+        `https://graph.facebook.com/me?fields=id,name,email,picture.type(large)&access_token=${token}`
+      );
+      const userInfo = await res.json();
+      await saveSocialUserToFirestore(userInfo.id, {
+        name: userInfo.name,
+        email: userInfo.email || 'N/A',
+        picture: userInfo.picture?.data?.url,
+        provider: 'facebook',
+      });
+      await AsyncStorage.setItem('user', JSON.stringify(userInfo));
+      router.replace('/(tabs)');
+    } catch (err) {
+      console.error('Facebook login error:', err);
+    }
+  };
 
   const goToSignup = () => {
-    router.push('/auth/signup'); 
-  };
+    router.push('/auth/signup');
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>Sign In</Text>
-
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -149,9 +162,7 @@ export default function LoginScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.signinButton} onPress={onLogin} disabled={loading}>
-          <Text style={styles.getStartedText}>
-            {loading ? 'Signing In...' : 'Sign In'}
-          </Text>
+          <Text style={styles.getStartedText}>{loading ? 'Signing In...' : 'Sign In'}</Text>
         </TouchableOpacity>
 
         <View style={styles.signupbox}>
@@ -168,14 +179,12 @@ export default function LoginScreen() {
           <View style={styles.line} />
         </View>
 
-        {/* ✅ Social Buttons */}
         <View style={styles.socialContainer}>
-          <TouchableOpacity style={styles.socialBtn} onPress={() => promptAsync()}>
+          <TouchableOpacity style={styles.socialBtn} onPress={() => promptGoogle()}>
             <AntDesign name="google" size={22} color="#000" />
             <Text style={styles.socialText}>Google</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.socialBtn}>
+          <TouchableOpacity style={styles.socialBtn} onPress={() => fbPromptAsync()}>
             <FontAwesome name="facebook" size={22} color="#000" />
             <Text style={styles.socialText}>Facebook</Text>
           </TouchableOpacity>
