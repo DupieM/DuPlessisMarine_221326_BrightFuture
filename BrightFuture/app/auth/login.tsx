@@ -3,20 +3,27 @@ import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from 'reac
 import { router } from 'expo-router';
 import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
 
-// 1. Import the useAuth hook from the root layout file
+// Hooks & services
 import { useAuth } from '../_layout'; 
-import { handleLogin, resetPassword, signInWithFacebook } from '@/services/authService';
+import { handleLogin, resetPassword} from '@/services/authService'; // ✅ added
+
+// Google Login
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
+import { saveSocialUserToFirestore } from '@/services/authService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+WebBrowser.maybeCompleteAuthSession();
+
+// Facebook Login
 
 export default function LoginScreen() {
-
   const { signInAsGuest } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // const { promptAsync: promptGoogle } = useGoogleAuth();
-
-  // ---- Sign In with Firebase ----
+  // ---- Email/Password Login ----
   const onLogin = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please enter both email and password');
@@ -27,34 +34,24 @@ export default function LoginScreen() {
       const user = await handleLogin(email, password);
       if (user) {
         Alert.alert('Welcome back!', 'You are now signed in!');
-        router.replace('/(tabs)'); // Optional fallback (context should handle it)
+        router.replace('/(tabs)');
       }
-    } catch (error: unknown) {
+    } catch (error) {
       let errorMessage = 'Something went wrong. Please try again.';
-
-      // Check if it's a Firebase error (with 'code' property)
       if (error && typeof error === 'object' && 'code' in error) {
-        const firebaseError = error as { code: string; message: string };
-
-        switch (firebaseError.code) {
+        switch (error.code) {
           case 'auth/invalid-email':
-            errorMessage = 'The email address is invalid.';
+            errorMessage = 'Invalid email address.';
             break;
           case 'auth/user-not-found':
           case 'auth/wrong-password':
-          case 'auth/invalid-credential':
             errorMessage = 'Incorrect email or password.';
             break;
           case 'auth/too-many-requests':
-            errorMessage = 'Too many login attempts. Please try again later.';
+            errorMessage = 'Too many login attempts. Try again later.';
             break;
-          default:
-            errorMessage = 'Login failed. Please check your details and try again.';
         }
-      } else if (error instanceof Error) {
-        errorMessage = error.message;
       }
-
       Alert.alert('Login Failed', errorMessage);
     } finally {
       setLoading(false);
@@ -64,7 +61,7 @@ export default function LoginScreen() {
   // ---- Reset Password ----
   const onResetPassword = async () => {
     if (!email) {
-      Alert.alert('Missing Email', 'Please enter your email to reset your password.');
+      Alert.alert('Missing Email', 'Enter your email to reset your password.');
       return;
     }
     try {
@@ -79,34 +76,47 @@ export default function LoginScreen() {
     }
   };
 
-   // ---- Guest Login ----
+  // ---- Guest Login ----
   const handleContinueGuest = () => {
     signInAsGuest();
   };
 
-  // ---- Google Login ----
-  // const handleGoogleLogin = async () => {
-  //   try {
-  //     const user = await promptGoogle(); // your existing Google auth
-  //     if (user) {
-  //       Alert.alert('Welcome!', 'You are now signed in with Google!');
-  //       router.replace('/(tabs)'); // Navigate to tabs
-  //     }
-  //   } catch (error) {
-  //     Alert.alert('Login Failed', String(error));
-  //   }
-  // };
+  // Google Login 
 
-  // ---- Facebook Login ----
-  const handleFacebookLogin = async () => {
+  const GOOGLE_CLIENT_ID = '82901784559-eabhpq29nteggag89cqdnf4tkp6tmfv7.apps.googleusercontent.com'
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId: GOOGLE_CLIENT_ID, // your single client ID
+    scopes: ['profile', 'email'],
+  });
+
+  React.useEffect(() => {
+    if (response?.type === 'success' && response.authentication?.accessToken) {
+      fetchGoogleUser(response.authentication.accessToken);
+    }
+  }, [response]);
+
+  const fetchGoogleUser = async (accessToken: string) => {
     try {
-      await signInWithFacebook(); // no return value needed
-      Alert.alert('Welcome!', 'You are now signed in with Facebook!');
-      router.replace('/(tabs)'); // Navigate to tabs
-    } catch (error) {
-      Alert.alert('Login Failed', String(error));
+      const res = await fetch('https://www.googleapis.com/userinfo/v2/me', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+      const userInfo = await res.json();
+
+      await saveSocialUserToFirestore(userInfo.id, {
+        name: userInfo.name,
+        email: userInfo.email,
+        picture: userInfo.picture,
+        provider: 'google',
+      });
+
+      await AsyncStorage.setItem('user', JSON.stringify(userInfo));
+      router.replace('/(tabs)');
+    } catch (err) {
+      console.error(err);
     }
   };
+
 
   const goToSignup = () => {
     router.push('/auth/signup'); 
@@ -158,14 +168,14 @@ export default function LoginScreen() {
           <View style={styles.line} />
         </View>
 
-        {/* Social Buttons */}
+        {/* ✅ Social Buttons */}
         <View style={styles.socialContainer}>
-          {/* <TouchableOpacity style={styles.socialBtn} onPress={handleGoogleLogin}>
+          <TouchableOpacity style={styles.socialBtn} onPress={() => promptAsync()}>
             <AntDesign name="google" size={22} color="#000" />
             <Text style={styles.socialText}>Google</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
 
-          <TouchableOpacity style={styles.socialBtn} onPress={handleFacebookLogin}>
+          <TouchableOpacity style={styles.socialBtn}>
             <FontAwesome name="facebook" size={22} color="#000" />
             <Text style={styles.socialText}>Facebook</Text>
           </TouchableOpacity>
@@ -175,9 +185,6 @@ export default function LoginScreen() {
         <TouchableOpacity style={styles.registerButton} onPress={handleContinueGuest}>
           <Text style={styles.registerText}>Continue</Text>
         </TouchableOpacity>
-
-        
-        
       </View>
     </View>
   );
@@ -219,7 +226,7 @@ const styles = StyleSheet.create({
   },
   password: {
     alignSelf: 'flex-start',
-    marginLeft: 40,
+    marginLeft: -105,
     marginTop: 5,
     marginBottom: 27,
     fontSize: 18,

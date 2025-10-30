@@ -1,9 +1,12 @@
 import 'dotenv/config';
 
-export default ({ config }) => ({
-  ...config,
-  extra: {
-    FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
-    // add other env variables here
+export default {
+  expo: {
+    name: "BrightFuture",
+    slug: "BrightFuture",
+    extra: {
+      facebookAppId: process.env.FACEBOOK_APP_ID,
+      googleClientId: process.env.GOOGLE_CLIENT_ID,
+    },
   },
-});
+};
