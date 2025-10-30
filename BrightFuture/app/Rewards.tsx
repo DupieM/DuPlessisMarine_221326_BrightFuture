@@ -36,12 +36,11 @@ export default function RewardScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.icon}>🎉</Text>
       <Text style={styles.header}>Congratulations!</Text>
       {badge && (
         <>
           <Image source={{ uri: badge.img }} style={styles.badgeImage} />
-          <Text style={styles.badgeName}>You earned the</Text>
+          <Text style={styles.badgeName}>You earned a</Text>
           <Text style={styles.badgeNametwo}>{formatBadgeName(badge.name)} badge</Text>
         </>
       )}
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
     flex: 1, 
     justifyContent: "center", 
     alignItems: "center",
-    backgroundColor: '#d0d5a9ff'
+    backgroundColor: '#ffffffff'
   },
   icon: {
     fontSize: 100,

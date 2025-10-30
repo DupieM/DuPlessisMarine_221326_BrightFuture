@@ -6,16 +6,16 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "brightfuture",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "userInterfaceStyle": "dark"
+      "userInterfaceStyle": "light"
     },
     "android": {
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "userInterfaceStyle": "dark",
+      "userInterfaceStyle": "light",
       "package": "com.anonymous.BrightFuture",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",

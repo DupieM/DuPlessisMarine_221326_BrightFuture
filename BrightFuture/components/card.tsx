@@ -217,9 +217,35 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         marginTop: -50,
-        left: 20
+        left: 30
+    },
+    categoryIconTwo: {
+        width: 70,
+        height: 70,
+        marginTop: -50,
+        left: 30
+    },
+    categoryIconthree: {
+        width: 70,
+        height: 70,
+        marginTop: -50,
+        left: 42
+    },
+    categoryIconFour: {
+        width: 70,
+        height: 70,
+        marginTop: -50,
+        left: 40
     },
     categoryTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+        position: 'absolute',
+        top: 20,
+        left: 35,
+    },
+     categoryTitleTwo: {
         fontSize: 24,
         fontWeight: 'bold',
         color: '#FFFFFF',

@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   titletwo: {
     fontSize: 56,
     fontWeight: 'bold',
-    color: '#ffffffff',
+    color: '#000000',
     marginTop: 0,
     left: 4,
   },

@@ -78,7 +78,7 @@ export default function HomeScreen() {
         {/* Badges Section */}
         <View style={styles.badgeContainer}>
           <Text style={styles.nextBadge}>
-            Badge you have so far
+            Badges you have so far
           </Text>
 
           <View style={styles.badgeGrid}>

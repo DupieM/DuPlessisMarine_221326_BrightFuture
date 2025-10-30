@@ -15,6 +15,7 @@ const PaymentScreen = () => (
       style={styles.image}
       resizeMode="contain"
     />
+
   </View>
 );
 
@@ -43,10 +44,10 @@ const styles = StyleSheet.create({
         paddingTop: 110, 
     },
     title: {
-        fontSize: 45,
+        fontSize: 56,
         fontWeight: 'bold',
-        color: '#000000',
-
+        color: '#000000ff',
+        marginLeft: -20
     },
   image: { 
     width: 500, 
