@@ -1,44 +1,81 @@
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { View, Text, Button, TouchableOpacity, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { handleSignin } from '../../services/authService';
 
 export default function SignUpScreen() {
+  const [name, setName] = useState('');
+  const [username, setUserName] = useState('');
+  const [phonenumber, setPhonenumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const [name, setName] = useState('');
-    const [username, setUserName] = useState('');
-    const [phonenumber, setPhonenumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    
-    //Sign up Function
-    const handleCreation = async () => {
-        // Validate all required fields are filled
-        if (!name.trim() || !username.trim() || !phonenumber.trim() || !email.trim() || !password.trim()) {
-            Alert.alert("Validation Error", "Please fill all the required fields.");
-            return;
+  // ✅ Helper function to validate email
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // ✅ Helper function to validate password strength
+  const isStrongPassword = (password: string) => {
+    return password.length >= 6;
+  };
+
+  // ✅ Main Sign Up Function
+  const handleCreation = async () => {
+    // Validate all required fields
+    if (!name.trim() || !username.trim() || !phonenumber.trim() || !email.trim() || !password.trim()) {
+      Alert.alert('Validation Error', 'Please fill in all the required fields.');
+      return;
+    }
+
+    // Validate email format
+    if (!isValidEmail(email)) {
+      Alert.alert('Invalid Email', 'Please enter a valid email address with "@" (e.g. example@email.com).');
+      return;
+    }
+
+    // Validate password strength
+    if (!isStrongPassword(password)) {
+      Alert.alert('Weak Password', 'Password must be at least 6 characters long.');
+      return;
+    }
+
+    // Send information to Firebase to create a user
+    try {
+      const infos = { name, username, phonenumber, email, password };
+      const success = await handleSignin(email, password, infos);
+
+      if (success) {
+        Alert.alert('Success', 'Your account has been created successfully!');
+        router.replace('/(tabs)');
+      }
+    } catch (error: unknown) {
+      let errorMessage = 'An unexpected error occurred. Please try again.';
+
+      if (error && typeof error === 'object' && 'code' in error) {
+        const firebaseError = error as { code: string; message: string };
+
+        switch (firebaseError.code) {
+          case 'auth/email-already-in-use':
+            errorMessage = 'This email is already in use. Try signing in instead.';
+            break;
+          case 'auth/invalid-email':
+            errorMessage = 'The email address is invalid.';
+            break;
+          case 'auth/weak-password':
+            errorMessage = 'The password is too weak. Please choose a stronger one.';
+            break;
+          default:
+            errorMessage = 'Sign up failed. Please check your details and try again.';
         }
-    
-        // Check password length
-        if (password.length < 6) {
-            Alert.alert("Validation Error", "Password is too short. It must be at least 6 characters.");
-            return;
-        }
-    
-        // Send information to Firestore to create a user
-        var infos = { name, username, phonenumber, email, password };
-        var success = await handleSignin(email, password, infos);
-    
-        // Check success of the sign-up process
-        if (success) {
-          Alert.alert("Sign Up", "You have successfully signed into carbonTrack.");
-          router.replace('/(tabs)');
-        }
-    };
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      Alert.alert('Sign Up Failed', errorMessage);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -118,10 +155,10 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   title: {
-    fontSize: 43, 
-    fontWeight: 'bold', 
+    fontSize: 43,
+    fontWeight: 'bold',
     marginBottom: -7,
-    color: '#000000ff'
+    color: '#000000ff',
   },
   input: {
     borderBottomColor: '#006A80',
@@ -134,7 +171,6 @@ const styles = StyleSheet.create({
     width: '80%',
     color: '#006A80',
     marginTop: 23,
-    fontFamily: 'NunitoMedium',
     fontWeight: '200',
   },
   signinButton: {
@@ -142,7 +178,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 30,
-    marginTop: 50
+    marginTop: 50,
   },
   getStartedText: {
     color: '#000000',

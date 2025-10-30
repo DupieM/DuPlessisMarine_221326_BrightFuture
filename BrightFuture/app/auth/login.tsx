@@ -29,12 +29,33 @@ export default function LoginScreen() {
         Alert.alert('Welcome back!', 'You are now signed in!');
         router.replace('/(tabs)'); // Optional fallback (context should handle it)
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert('Login Failed', error.message);
-      } else {
-        Alert.alert('Login Failed', String(error));
+    } catch (error: unknown) {
+      let errorMessage = 'Something went wrong. Please try again.';
+
+      // Check if it's a Firebase error (with 'code' property)
+      if (error && typeof error === 'object' && 'code' in error) {
+        const firebaseError = error as { code: string; message: string };
+
+        switch (firebaseError.code) {
+          case 'auth/invalid-email':
+            errorMessage = 'The email address is invalid.';
+            break;
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+          case 'auth/invalid-credential':
+            errorMessage = 'Incorrect email or password.';
+            break;
+          case 'auth/too-many-requests':
+            errorMessage = 'Too many login attempts. Please try again later.';
+            break;
+          default:
+            errorMessage = 'Login failed. Please check your details and try again.';
+        }
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
       }
+
+      Alert.alert('Login Failed', errorMessage);
     } finally {
       setLoading(false);
     }
@@ -154,6 +175,9 @@ export default function LoginScreen() {
         <TouchableOpacity style={styles.registerButton} onPress={handleContinueGuest}>
           <Text style={styles.registerText}>Continue</Text>
         </TouchableOpacity>
+
+        
+        
       </View>
     </View>
   );

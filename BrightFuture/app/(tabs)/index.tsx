@@ -59,15 +59,16 @@ export default function HomeScreen() {
         {/* Header */}
         <View style={styles.headerContainer}>
           <View style={styles.imagePlaceholder}>
-            <Text style={styles.title}>Dashboard</Text>
           </View>
         </View>
 
         {/* Donation Progress */}
         <Card style={styles.balanceCard}>
-          <Text style={styles.balanceText}>
-            R {totalDonated.toLocaleString('en-ZA')} - R {targetGoal.toLocaleString('en-ZA')}
-          </Text>
+          <Text style={styles.balanceTitle}>Donation Goals</Text>
+           <View style={styles.progressLabelContainer}>
+            <Text style={styles.raisedAmount}>R{totalDonated.toLocaleString('en-ZA')}</Text>
+            <Text style={styles.targetAmount}> / R{targetGoal.toLocaleString('en-ZA')}</Text>
+          </View>
           <View style={styles.progressBarBackground}>
             <View style={[styles.progressBarFill, { width: `${Math.min(progress, 100)}%` }]} />
           </View>

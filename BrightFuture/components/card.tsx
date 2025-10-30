@@ -77,16 +77,31 @@ const styles = StyleSheet.create({
     },
     balanceCard: {
         paddingVertical: 20,
-        marginTop: -40, // Pull it up over the header background
+        marginTop: -80, // Pull it up over the header background
         backgroundColor: 'white',
-        borderColor: '#EFEFEF',
+        borderColor: '#ffffffff',
         borderWidth: 1,
     },
-    balanceText: {
-        fontSize: 18,
-        marginBottom: 10,
-        fontWeight: '600',
-        color: '#1E1924',
+    balanceTitle: {
+      textAlign: "center",
+      fontSize: 29,
+      marginBottom: 10,
+      fontWeight: '800'
+    },
+    progressLabelContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 6,
+    },
+    raisedAmount: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#6B8E23',
+    },
+    targetAmount: {
+      fontSize: 16,
+      color: '#555',
     },
     progressBarBackground: {
         height: 12, // Slightly thicker bar
@@ -105,6 +120,11 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color: "#4682B4",
     },
+    progressText: {
+    color: '#000',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",

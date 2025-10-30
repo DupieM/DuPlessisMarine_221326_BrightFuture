@@ -43,6 +43,8 @@ export default function DonationScreen() {
         </TouchableOpacity>
     );
 
+    
+
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
             <View style={styles.categoryHeader}>
