@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Alert,
-  ActivityIndicator,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, Alert, ActivityIndicator, ScrollView } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { auth, db } from "../../firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -33,7 +23,7 @@ export default function ProfileScreen() {
 
   const storage = getStorage();
 
-  // ✅ Watch user authentication state
+  // Watch user authentication state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(authInstance, (currentUser) => {
       setUser(currentUser);
@@ -72,42 +62,81 @@ export default function ProfileScreen() {
     loadUserData();
   }, [user]);
 
-  // ✅ Pick image
+  // Modernized image picker (Expo SDK 52+)
   const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0.7,
-    });
-
-    if (!result.canceled) {
-      uploadImage(result.assets[0].uri);
-    }
-  };
-
-  // ✅ Upload image
-  const uploadImage = async (uri: string) => {
-    if (!user) return;
-
     try {
-      setUploading(true);
-      const response = await fetch(uri);
-      const blob = await response.blob();
-      const storageRef = ref(storage, `profilePictures/${user.uid}`);
-      await uploadBytes(storageRef, blob);
+      // Request permissions first
+      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permissionResult.granted) {
+        Alert.alert("Permission required", "Please allow access to your photos.");
+        return;
+      }
 
-      const downloadURL = await getDownloadURL(storageRef);
-      setUserInfo((prev) => ({ ...prev, photoURL: downloadURL }));
+      // Launch image library
+      const result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.7,
+      });
 
-      Alert.alert("Profile Picture", "Uploaded successfully!");
+      // The result API has changed — check if the selection was cancelled
+      if (result.canceled) {
+        return;
+      }
+
+      // Access selected image
+      const selectedAsset = result.assets?.[0];
+      if (selectedAsset?.uri) {
+        await uploadImage(selectedAsset.uri);
+      }
     } catch (error) {
-      console.log("Upload error:", error);
-      Alert.alert("Upload Error", "Failed to upload image.");
-    } finally {
-      setUploading(false);
+      console.error("Image pick error:", error);
+      Alert.alert("Error", "Failed to open image picker.");
     }
   };
+
+
+  // Upload image
+  const uploadImage = async (uri: string) => {
+  if (!user) {
+    Alert.alert("Error", "User not authenticated.");
+    return;
+  }
+
+  try {
+    setUploading(true);
+
+    // Fetch image as blob (Expo-compatible)
+    const response = await fetch(uri);
+    if (!response.ok) {
+      throw new Error("Failed to fetch image from local URI");
+    }
+    const blob = await response.blob();
+
+    // Reference in Firebase Storage
+    const storageRef = ref(storage, `profilePictures/${user.uid}_${Date.now()}.jpg`);
+
+    // Upload the blob
+    await uploadBytes(storageRef, blob);
+
+    // Get download URL
+    const downloadURL = await getDownloadURL(storageRef);
+
+    // Update local state
+    setUserInfo((prev) => ({ ...prev, photoURL: downloadURL }));
+
+    // Save to Firestore
+    const docRef = doc(db, "users", user.uid);
+    await setDoc(docRef, { photoURL: downloadURL }, { merge: true });
+
+    Alert.alert("Success", "Profile picture uploaded successfully!");
+  } catch (error: any) {
+    console.error("Upload error:", error);
+    Alert.alert("Upload Error", error.message || "Failed to upload image.");
+  } finally {
+    setUploading(false);
+  }
+};
 
   // ✅ Save profile
   const saveProfile = async () => {
@@ -207,7 +236,11 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: "#f5f5f5" },
+  container: { 
+    flex: 1, 
+    padding: 20, 
+    backgroundColor: "#f5f5f5" 
+  },
   headerContainer: {
     width: 360,
     height: 170,
@@ -239,7 +272,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft: 100,
   },
-  placeholder: { backgroundColor: "#ccc", justifyContent: "center", alignItems: "center" },
+  placeholder: { 
+    backgroundColor: "#ccc", 
+    justifyContent: "center", 
+    alignItems: "center" 
+  },
   input: {
     width: "90%",
     height: 50,

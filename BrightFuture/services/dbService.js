@@ -101,3 +101,28 @@ export const unlockUserBadge = async (uid, badgeId) => {
     console.error("❌ Error unlocking badge:", e);
   }
 };
+
+// Save volunteer form data
+export const saveVolunteerform = async (formData)  => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  if (!user) {
+    throw new Error("No user logged in");
+  }
+
+  try {
+    const userRef = doc(db, "users", user.uid);
+    const volunteerRef = collection(userRef, "volunteerWork");
+
+    await addDoc(volunteerRef, {
+      ...formData,
+      createdAt: new Date(),
+    });
+
+    console.log("✅ Volunteer form saved for user:", user.uid);
+  } catch (error) {
+    console.error("❌ Error saving volunteer form:", error);
+    throw error;
+  }
+};

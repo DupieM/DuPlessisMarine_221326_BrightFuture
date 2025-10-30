@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator, ScrollView } from 'react-native';
 import { router } from 'expo-router';
 import { getVolunteerInitiatives } from '@/services/dbService';
 
@@ -59,7 +59,7 @@ export default function VolunteerScreen() {
                 })
               }
             >
-              <Text style={styles.buttonText}>Detail</Text>
+              <Text style={styles.buttonText}>Volunteer Now</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -69,7 +69,12 @@ export default function VolunteerScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', padding: 10 },
+  container: { 
+    flex: 1, 
+    backgroundColor: '#fff', 
+    padding: 10,
+    paddingBottom: 30
+  },
   headerContainer: {
     width: 370,
     height: 170,
@@ -123,7 +128,10 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 16,
   },
-  buttonText: { color: '#fff', fontWeight: 'bold' },
+  buttonText: { 
+    color: '#fff', 
+    fontWeight: 'bold' 
+  },
   loaderContainer: {
     flex: 1,
     justifyContent: 'center',
