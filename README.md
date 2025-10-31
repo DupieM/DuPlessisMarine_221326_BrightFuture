@@ -19,7 +19,7 @@
   <h3 align="center">BrightFuture</h3>
 
 <p align="center">
-    Helping others for better<br>
+    Helping others for the greater good<br>
    <br />
     <a href="https://github.com/DupieM/DuPlessisMarine_221326_BrightFuture/issues">Report Bug</a>
     ·
@@ -144,7 +144,7 @@ This Screen allows users to be able to sign up and then sign in.
 
 ### Home Screen
 
-This screen welcomes users to BrightFuture, it shows teh user how much money is raised and also the badges that they can collect. It also has links to te other pages to help SA Children's Home.
+This screen welcomes users to BrightFuture, it shows the user how much money is already raised for the home. It will also show the user all the badges they have collected so far. The screen has links to the other screens as to help SA Children's Home.
 
 </br>
 
@@ -158,19 +158,19 @@ Donations will give the user an option to select a category for which he wants t
 
 ### Rewards Screen
 
-This screens allows user to view what badge they have collected and also what the next badge is they are aiming for. This screen also shows a quate for the user. 
+This screens allows user to view which badges they have collected and also what the next badge is that they should aim for. This screen also shows a quote for the user. 
 
 ![Volunteer]()
 
 ### Volunteer Screens
 
-This screens allows user sto view different volunteer opportunities to sign up will allow the user to select which type of volunteering they want to do and then to provide their details and then submit it to SA Children’s Home.
+This screens allows users to view different volunteer opportunities to sign up for, it will allow the user to select which type of volunteering they want to do and then to provide their details and then submit it to SA Children’s Home.
 
 ![Payment]()
 
 ### Payment Screen
 
-ths screen let the user be able to sacn the QR code for SnapScan that will allow the user to pay an amount to help SA Children's Home.
+This screen enables the user to scan the QR code for SnapScan that will allow the user to pay an amount to help SA Children's Home. There is also an option to enable the QR code by clicking on the button.
 
 ![Profile]()
 
@@ -214,13 +214,13 @@ The `Development Process` is the technical implementations and functionality don
 
 #### Highlights
 <!-- stipulated the highlight you experienced with the project -->
-* Engineering tha badges so that it displays greyed out when you have not collected it so far
-* Implimenting an inapp qr code reader
+* Designing & Engineering the badges so that it displays greyed out when you have not collected it as yet
+* Implementing an in-app QR code reader
 
 #### Challenges
 <!-- stipulated the challenges you faced with the project and why you think you faced it or how you think you'll solve it (if not solved) -->
 * Interfacing with Google and Facebook login functions
-* Getting badges to be added when a user is created and also to make sure that it displays greyed out
+* Getting badges to be added when a user is created and also to make sure that it displays greyed out when not collected
 
 ### Reviews & Testing
 <!-- stipulate how you've conducted testing in the form of peer reviews, feedback and also functionality testing, like unit tests (if applicable) -->
@@ -245,8 +245,8 @@ The `Development Process` is the technical implementations and functionality don
 ### Future Implementation
 <!-- stipulate functionality and improvements that can be implemented in the future. -->
 
-* To implimate login function that alrady populates volunteer form with user data whne they log in
-* Linking the retails app of the places to my app and not to the online website
+* To implement a function that already populates the volunteer form with user data when the user is logged in
+* Linking the retailer apps of the stores to my app and not the online website of the retailer
 
 <!-- MOCKUPS -->
 ## Final Outcome
