@@ -19,7 +19,7 @@
   <h3 align="center">BrightFuture</h3>
 
 <p align="center">
-    ??<br>
+    Helping others for better<br>
    <br />
     <a href="https://github.com/DupieM/DuPlessisMarine_221326_BrightFuture/issues">Report Bug</a>
     ·
@@ -67,11 +67,14 @@
 
 ### Project Description
 
-...
+BrightFuture is an interactive digital platform that drives engagement and helps raise funds and other donations for SA Children’s Home. The digital platform is in the form of a mobile application that is designed specifically to connect donors and volunteers with SA Children’s Home as to provide the necessary resources for the children in need. Brightfuture delivers various ways to help SA Children’s Home either by enabling easy money donations, food donations, stationary donations or clothing donations and volunteers can sign up. Donors and volunteers will be rewarded with badges for every donation or sign up they do.
 
 ### Built With
 
-* <a href="">![Static Badge]()</a>
+* <a href="https://expo.dev/">![Static Badge](https://img.shields.io/badge/expo-url?style=for-the-badge&logo=expo&logoColor=white&color=black)</a>
+* <a href="https://reactnative.dev/">![Static Badge](https://img.shields.io/badge/react%20native-url?style=for-the-badge&logo=react&color=black)</a>
+* <a href="https://github.com/"> ![Static Badge](https://img.shields.io/badge/Github-url?style=for-the-badge&logo=github&color=purple)</a>
+* <a href="https://code.visualstudio.com/"> ![Static Badge](https://img.shields.io/badge/visual%20studio-url?style=for-the-badge&logo=visual%20studio&logoColor=blue&color=black&link=https%3A%2F%2Fcode.visualstudio.com%2F)</a>
 
 
 <!-- GETTING STARTED -->
@@ -82,7 +85,7 @@ The following instructions will get you a copy of the project up and running on 
 
 ### Prerequisites
 
-?????
+Ensure that you have the latest version of [Expo](https://docs.expo.dev/get-started/create-a-project/) installed on your machine. The Expo app for a mobile phone will also be required.
 
 ## How to install
 
@@ -93,33 +96,87 @@ Clone the project repository as follow:
 
 2. Enter `https://github.com/DupieM/DuPlessisMarine_221326_BrightFuture.git` into the URL field and press the `Clone` button.
 
-To start the ...
+To start the Expo app and install dependancies on laptop:
+
+1. Go to Visual Studio code  </br>
+   Open your Visual Studio code then click on File and then click on Open folder.
+    Then navigate to where you have cloned the repository and open it.
+
+2. Start terminal </br>
+   Go to `Terminal` then click on new terminal.
+
+3. Install dependencies </br>
+   Enter `npm install` to get all the dependencies
+
+4. Install latest Expo version </br>
+   Enter `npm install expo@latest` to get latest version
+
+5. Create your own .env file </br>
+    For Google & Facebook add your own `Private Keys` that you generated
+
+6. Start the Expo server </br>
+   Enter `npm start` to start Expo
+
+To start the Expo app on a phone:
+
+1. Go to Google play store or Apple play store  </br>
+   Open your plays tore and type in search field `Expo Go`.
+   Click on the Expo Go app and then install it.
+
+2. Open Expo Go app </br>
+   After opening the app click on QR code and scan the QR code in the terminal of the app on Visual Studio
+
+3. Start experimenting with the mobile application
 
 <!-- FEATURES AND FUNCTIONALITY-->
 <!-- You can add the links to all of your imagery at the bottom of the file as references -->
 ## Features and Functionality
 
+![Authentication]()
+
+### Authentication Screens
+
+This Screen allows users to be able to sign up and then sign in.
+
+</br>
+
 ![Home]()
 
-### Screen 1 - Name
+### Home Screen
 
-??
-
-</br>
-
-![Sticker]()
-
-### Screen 2 - Name
-
-???
+This screen welcomes users to BrightFuture, it shows teh user how much money is raised and also the badges that they can collect. It also has links to te other pages to help SA Children's Home.
 
 </br>
 
-![Screen 3]()
+![Donations]()
 
-### Screen 3 - Name
+### Donations Screens
 
-???
+Donations will give the user an option to select a category for which he wants to donate for. Once a category is selected the user will choose either to buy items for that category from a retailer as to deliver it to the SA Children’s Home or they can choose to donate money from SnapScan. If they choose to donate they will be linked through to the retailer website to order and request delivery of the goods.
+
+![Rewards]()
+
+### Rewards Screen
+
+This screens allows user to view what badge they have collected and also what the next badge is they are aiming for. This screen also shows a quate for the user. 
+
+![Volunteer]()
+
+### Volunteer Screens
+
+This screens allows user sto view different volunteer opportunities to sign up will allow the user to select which type of volunteering they want to do and then to provide their details and then submit it to SA Children’s Home.
+
+![Payment]()
+
+### Payment Screen
+
+ths screen let the user be able to sacn the QR code for SnapScan that will allow the user to pay an amount to help SA Children's Home.
+
+![Profile]()
+
+### Profile Screen
+
+Profile Management allows the user to upload a profile picture, update their details and change their password.
 
 <!-- CONCEPT PROCESS -->
 <!-- Briefly explain your concept ideation process -->
@@ -139,6 +196,10 @@ The `Conceptual Process` is the set of actions, activities and research that was
 </br>
 <img src="readme_images/" alt="Wireframe 3" width="700px">
 
+### Badge Designs
+
+<img src="readme_images/" alt="Wireframe 4" width="700px">
+
 <!-- DEVELOPMENT PROCESS -->
 
 ## Development Process
@@ -148,15 +209,18 @@ The `Development Process` is the technical implementations and functionality don
 ### Implementation Process
 <!-- stipulate all of the functionality you included in the project -->
  
-* `...` 
+* `Expo` was used to create a native Android app
+* `Webview` was used to open my repository links in the app
 
 #### Highlights
 <!-- stipulated the highlight you experienced with the project -->
-* ...
+* Engineering tha badges so that it displays greyed out when you have not collected it so far
+* Implimenting an inapp qr code reader
 
 #### Challenges
 <!-- stipulated the challenges you faced with the project and why you think you faced it or how you think you'll solve it (if not solved) -->
-* ...
+* Interfacing with Google and Facebook login functions
+* Getting badges to be added when a user is created and also to make sure that it displays greyed out
 
 ### Reviews & Testing
 <!-- stipulate how you've conducted testing in the form of peer reviews, feedback and also functionality testing, like unit tests (if applicable) -->
@@ -164,21 +228,25 @@ The `Development Process` is the technical implementations and functionality don
 
 `Unit Tests` were conducted to establish working functionality by myself.
 
-* `Test 1` of confirming ...
-* `Test 2` of confirming ...
-* `Test 3` of confirming ...
+* `Test 1` of confirming that the authentication functions work
+* `Test 2` of confirming that the displaying of badges on home screen works
+* `Test 3` of confirming that the SnapScan QR code reader works
+* `Test 4` of confirming that the viewing of the website opens up in the app after clicking on it
+* `Test 5` of confirming that the rewards screen show different badges when you collect them
+* `Test 6` of confirming that the upload from profile picture works and update of profile information
 
 #### UAT Tests
 
 `User Acceptance Testing` were conducted to establish working functionality by my peers.
 
-* `Peer One` did a unit test ...
-* `Peer TWo` did a unit test ...
+* `Peer One` did a unit test of the whole app and helped me by pointing out how to fix my UI designs to make it more user friendly
+* `Peer Two` did a unit test to test if all the functionality was working perfectly.
 
 ### Future Implementation
 <!-- stipulate functionality and improvements that can be implemented in the future. -->
 
-* ...
+* To implimate login function that alrady populates volunteer form with user data whne they log in
+* Linking the retails app of the places to my app and not to the online website
 
 <!-- MOCKUPS -->
 ## Final Outcome
@@ -199,6 +267,17 @@ The `Development Process` is the technical implementations and functionality don
 
 ![Mockup 5](readme_images/)
 <br>
+
+<!-- VIDEO DEMONSTRATION -->
+### Video Demonstration
+
+To see a run through of the application, click below:
+
+[View Demonstration]()
+
+### Promotional Video
+
+[Promo Video]()
 
 <!-- ROADMAP -->
 ## Roadmap
