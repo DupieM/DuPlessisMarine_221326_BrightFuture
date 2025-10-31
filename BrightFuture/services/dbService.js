@@ -54,7 +54,9 @@ export const getVolunteerInitiatives = async () => {
 export const getBadges = async () => {
   const allBadges = [];
 
-  const querySnapshot = await getDocs(collection(db, "badges")); // ✅ use "badges" collection
+  const q = query(collection(db, "badges"), orderBy("number", "asc"));
+  const querySnapshot = await getDocs(q);
+
   querySnapshot.forEach((doc) => {
     allBadges.push({ ...doc.data(), id: doc.id });
   });

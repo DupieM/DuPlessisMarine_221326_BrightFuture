@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, ActivityIndicator } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { getBadges } from "@/services/dbService";
+import { useRouter } from 'expo-router';
 
 export default function RewardScreen() {
+  const router = useRouter();
+
   const params = useLocalSearchParams();
   // Ensure these are strings
   const badgeKey = Array.isArray(params.badgeKey) ? params.badgeKey[0] : params.badgeKey;
@@ -49,6 +52,12 @@ export default function RewardScreen() {
           Next badge to collect: {formatBadgeName(nextBadge)}
         </Text>
       )}
+
+      <Text style={styles.quate}>
+        " The smallest act of care can make the biggest difference "
+      </Text>
+
+      <Text style={styles.back} onPress={() => router.push("/categories")}>Categories</Text>
     </View>
   );
 }
@@ -92,6 +101,19 @@ const styles = StyleSheet.create({
     fontSize: 24, 
     color: "#000000",
     fontStyle: 'italic',
-    marginBottom: 50
+    marginBottom: 30
   },
+  quate: {
+    textAlign: "center",
+    fontSize: 25, 
+    paddingLeft: 30,
+    paddingRight: 30,
+    color: '#006A80',
+    marginBottom: 20
+  },
+  back: {
+    marginBottom: 20,
+    fontSize: 20,
+    fontStyle: 'italic',
+  }
 });

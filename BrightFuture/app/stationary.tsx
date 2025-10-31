@@ -15,9 +15,9 @@ export default function StationaryScreen() {
   const router = useRouter();
 
   const stores = [
-    { name: 'Waltons', url: 'https://www.waltons.co.za' },
-    { name: 'PNA', url: 'https://www.pna.co.za' },
-    { name: 'Takealot', url: 'https://www.takealot.com' },
+    { name: 'Waltons', url: 'https://www.waltons.co.za', color: '#000000' },
+    { name: 'PNA', url: 'https://www.pna.co.za', color: '#db1111ff' },
+    { name: 'Takealot', url: 'https://www.takealot.com', color: '#004B8D' },
   ];
 
   const [stationaries, setStationaries] = useState<Badge[]>([]);
@@ -43,24 +43,6 @@ export default function StationaryScreen() {
     const formatBadgeName = (name: string) => {
       // Simple formatting: capitalize first letter
       return name.charAt(0).toUpperCase() + name.slice(1);
-    };
-
-  const openDonateLink = async () => {
-      const auth = getAuth();
-      const currentUser = auth.currentUser;
-      if (!currentUser) return;
-
-      // 1️⃣ Unlock the "food" badge
-      await unlockUserBadge(currentUser.uid, "Stationary");
-
-      // 2️⃣ Determine the next badge (optional, for RewardScreen display)
-      const nextBadge = "Volunteer"; // for example, next badge you want to show
-
-      // 3️⃣ Navigate to RewardScreen and pass badge info
-      router.push({
-        pathname: "/Rewards",
-        params: { badgeKey: "Stationary", nextBadge },
-      });
     };
 
   return (
@@ -107,18 +89,18 @@ export default function StationaryScreen() {
         {stores.map((store) => (
           <TouchableOpacity
             key={store.name}
-            style={styles.storeButton}
+            style={styles.storeButtonThree}
             onPress={() => router.push({ pathname: '/stationaryOnline', params: { url: store.url, title: store.name } })}
           >
-            <Text style={styles.storeButtonText}>{store.name}</Text>
+            <Text style={[styles.storeButtonTextThree, { color: store.color }]}>{store.name}</Text>
           </TouchableOpacity>
         ))}
 
         <View style={styles.dividerContainer}>
-                        <View style={styles.line} />
-                        <Text style={styles.orText}>or</Text>
-                        <View style={styles.line} />
-                      </View>
+          <View style={styles.line} />
+            <Text style={styles.orText}>or</Text>
+          <View style={styles.line} />
+        </View>
 
 
       <Card style={styles.donateButton}  onPress={() => router.push("/PaymentScreen")}>

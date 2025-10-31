@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import Card, { styles } from '../components/card';
-import { getAuth } from 'firebase/auth';
-import { unlockUserBadge } from '@/services/dbService';
 import { getFoods } from '@/services/dbService';
 
 type Badge = {
@@ -35,6 +33,11 @@ export default function FoodScreen() {
     fetchBadges();
   }, []);
 
+  const urls: Record<string, string> = {
+    checkers: 'https://www.checkers.co.za/shop',
+    picknpay: 'https://www.pnp.co.za/',
+  };
+
   const goToStore = (store: 'checkers' | 'picknpay') => {
     router.push({
       pathname: '/FoodWebView',
@@ -42,24 +45,8 @@ export default function FoodScreen() {
     });
   };
 
-  const openDonateLink = async () => {
-    const auth = getAuth();
-    const currentUser = auth.currentUser;
-    if (!currentUser) return;
 
-    // Unlock the "Food" badge
-    await unlockUserBadge(currentUser.uid, "Food");
-
-    // Update local state so the UI shows it unlocked immediately
-    setUnlockedBadges((prev) => ({ ...prev, Food: true }));
-
-    const nextBadge = "clothes"; // for example, next badge you want to show
-
-    router.push({
-      pathname: "/Rewards",
-      params: { badgeKey: "Food", nextBadge },
-    });
-  };
+  
 
   const formatBadgeName = (name: string) => {
     // Simple formatting: capitalize first letter
@@ -126,8 +113,8 @@ export default function FoodScreen() {
           <Text style={styles.storeButtonText}>Checkers Sixty60</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.storeButton} onPress={openDonateLink}>
-          <Text style={styles.storeButtonText}>Pick n Pay ASAP!</Text>
+        <TouchableOpacity style={styles.storeButtonTwo} onPress={() => goToStore('picknpay')}>
+          <Text style={styles.storeButtonTextTwo}>Pick n Pay ASAP!</Text>
         </TouchableOpacity>
       </View>
 

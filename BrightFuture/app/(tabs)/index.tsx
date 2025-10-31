@@ -13,7 +13,15 @@ export default function HomeScreen() {
   const progress = (totalDonated / targetGoal) * 100;
 
   const [allBadges, setAllBadges] = useState<any[]>([]);
-  const [userData, setUserData] = useState({ nextBadge: '', badges: {} });
+  type UserData = {
+    nextBadge: string;
+    badges: Record<string, boolean>;
+  };
+
+  const [userData, setUserData] = useState<UserData>({
+    nextBadge: '',
+    badges: {},
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,6 +31,7 @@ export default function HomeScreen() {
       if (user) {
         try {
           const badges = await getBadges(); // [{ name, img, id }]
+          console.log("Ordered badges:", badges.map(b => b.number));
           setAllBadges(badges);
 
           const currentUserDataRaw = await getUserInfo();
@@ -82,11 +91,12 @@ export default function HomeScreen() {
           </Text>
 
           <View style={styles.badgeGrid}>
-            {Object.entries(userData.badges || {}).map(([badgeName, isUnlocked]) => {
-              const badge = allBadges.find((b) => b.name === badgeName);
+            {allBadges.map((badge) => {
+              const isUnlocked = userData.badges?.[badge.name] || false;
+
               return (
-                <View key={badgeName} style={styles.badgeItem}>
-                  {badge?.img ? (
+                <View key={badge.id} style={styles.badgeItem}>
+                  {badge.img ? (
                     <Image
                       source={{ uri: badge.img }}
                       style={[
@@ -97,7 +107,7 @@ export default function HomeScreen() {
                   ) : (
                     <View style={[styles.badgeImage, { backgroundColor: '#eee' }]} />
                   )}
-                  <Text style={styles.badgeLabel}>{formatBadgeName(badgeName)}</Text>
+                  <Text style={styles.badgeLabel}>{formatBadgeName(badge.name)}</Text>
                 </View>
               );
             })}

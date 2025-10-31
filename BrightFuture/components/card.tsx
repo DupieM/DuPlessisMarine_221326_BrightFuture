@@ -391,8 +391,8 @@ const styles = StyleSheet.create({
     onlineHeader: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#800000', // Mock header color (Checkers style)
-        paddingTop: Platform.OS === 'ios' ? 50 : 20,
+        backgroundColor: '#A0AA61', // Mock header color (Checkers style)
+        paddingTop: Platform.OS === 'ios' ? 50 : 30,
         paddingBottom: 15,
         paddingHorizontal: 10,
     },
@@ -498,19 +498,51 @@ const styles = StyleSheet.create({
 
     //
     storeButton: {
-    backgroundColor: '#4CAF50',
-    paddingVertical: 12,
-    paddingHorizontal: 25,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginTop: 15,
-  },
-  storeButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+        backgroundColor: '#37A9B0',
+        paddingVertical: 12,
+        paddingHorizontal: 25,
+        borderRadius: 12,
+        alignItems: 'center',
+        marginTop: 15,
+    },
+    storeButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    storeButtonTwo: {
+        backgroundColor: '#ffffffff',
+        borderColor: '#888888ff',
+        borderWidth: 0.3,
+        paddingVertical: 12,
+        paddingHorizontal: 25,
+        borderRadius: 12,
+        alignItems: 'center',
+        marginTop: 15,
+    },
+    storeButtonTextTwo: {
+        color: '#0B365D',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    storeButtonThree: {
+        backgroundColor: '#ffffffff',
+        borderColor: '#888888ff',
+        borderWidth: 0.3,
+        paddingVertical: 12,
+        paddingHorizontal: 25,
+        borderRadius: 12,
+        alignItems: 'center',
+        marginTop: 15,
+    },
+    storeButtonTextThree: {
+        color: '#0B365D',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
 });
 
 export default Card;
