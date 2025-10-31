@@ -53,11 +53,13 @@ export default function RewardScreen() {
         </Text>
       )}
 
-      <Text style={styles.quate}>
-        " The smallest act of care can make the biggest difference "
-      </Text>
+      {badge && (
+        <>
+          <Text style={styles.quate}>"{formatBadgeName(badge.quate)}"</Text>
+        </>
+      )}
 
-      <Text style={styles.back} onPress={() => router.push("/categories")}>Categories</Text>
+      <Text style={styles.back} onPress={() => router.push("/")}>Home</Text>
     </View>
   );
 }
@@ -106,8 +108,8 @@ const styles = StyleSheet.create({
   quate: {
     textAlign: "center",
     fontSize: 25, 
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingLeft: 25,
+    paddingRight: 25,
     color: '#006A80',
     marginBottom: 20
   },

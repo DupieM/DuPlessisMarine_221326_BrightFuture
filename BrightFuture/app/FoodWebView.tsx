@@ -46,7 +46,7 @@ export default function FoodWebView() {
           <Text style={styles.backText}>{'‹ Back'}</Text>
         </TouchableOpacity>
         <Text style={styles.title}>
-          {store === 'picknpay' ? 'Pick n Pay ASAP!' : 'Checkers 60x60'}
+          {store === 'picknpay' ? 'Pick n Pay ASAP!' : 'Checkers Sixty60'}
         </Text>
       </View>
 

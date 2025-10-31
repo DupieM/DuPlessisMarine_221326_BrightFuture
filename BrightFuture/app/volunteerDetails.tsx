@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MaterialIcons, Ionicons, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import { saveVolunteerform } from '@/services/dbService';
+import { getAuth } from 'firebase/auth';
+import { getStationaries, unlockUserBadge } from '@/services/dbService';
 
 export default function VolunteerDetailScreen() {
   const { title, description, iconLib, iconName, imageUrl} = useLocalSearchParams();
@@ -52,7 +54,32 @@ export default function VolunteerDetailScreen() {
     }
   };
 
+   const router = useRouter();
+  const [unlockedBadges, setUnlockedBadges] = useState<Record<string, boolean>>({});
+  
+    const openDonateLink = async () => {
+          const auth = getAuth();
+          const currentUser = auth.currentUser;
+          if (!currentUser) return;
+    
+          // 1️⃣ Unlock the "food" badge
+          await unlockUserBadge(currentUser.uid, "Volunteer");
+    
+          // 2️⃣ Determine the next badge (optional, for RewardScreen display)
+          const nextBadge = "Hero"; // for example, next badge you want to show
+    
+          // 3️⃣ Navigate to RewardScreen and pass badge info
+          router.push({
+            pathname: "/Rewards",
+            params: { badgeKey: "Volunteer", nextBadge },
+          });
+        };
+
   return (
+    <KeyboardAvoidingView
+          style={{ flex: 1, backgroundColor: '#ffffffff' }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       <Image source={{ uri: imageUrl as string }} style={styles.detailImage} resizeMode="cover" />
       <Text style={styles.title}>{title}</Text>
@@ -90,11 +117,12 @@ export default function VolunteerDetailScreen() {
           placeholderTextColor="#D2754F"
         />
 
-        <TouchableOpacity style={styles.joinButton} onPress={handleJoin}>
+        <TouchableOpacity style={styles.joinButton} onPress={() => { handleJoin(); openDonateLink(); }}>
           <Text style={styles.joinText}>Join</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 

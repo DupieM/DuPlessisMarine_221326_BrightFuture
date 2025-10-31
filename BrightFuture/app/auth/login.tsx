@@ -68,7 +68,7 @@ export default function LoginScreen() {
   const handleContinueGuest = () => signInAsGuest();
 
   // ---------- Google Login ----------
-  const GOOGLE_CLIENT_ID = '82901784559-eabhpq29nteggag89cqdnf4tkp6tmfv7.apps.googleusercontent.com'; // replace with Web client ID
+  const GOOGLE_CLIENT_ID = '82901784559-eabhpq29nteggag89cqdnf4tkp6tmfv7.apps.googleusercontent.com';
   const [googleRequest, googleResponse, promptGoogle] = Google.useAuthRequest({
     clientId: GOOGLE_CLIENT_ID,
     scopes: ['profile', 'email'],
@@ -101,10 +101,17 @@ export default function LoginScreen() {
 
   // ---------- Facebook Login ----------
   const FACEBOOK_APP_ID = '689340150456661';
+
+  // Correct redirectUri for Expo (works with Expo Go and standalone)
+  const fbRedirectUri = AuthSession.makeRedirectUri({
+    scheme: 'myapp', // your app scheme
+    useProxy: true,   // ✅ for Expo Go development
+  } as any);
+
   const [fbRequest, fbResponse, fbPromptAsync] = Facebook.useAuthRequest({
     clientId: FACEBOOK_APP_ID,
     scopes: ['public_profile', 'email'],
-    redirectUri: AuthSession.makeRedirectUri({ scheme: 'myapp' }), // ✅ correct
+    redirectUri: fbRedirectUri,
   });
 
   useEffect(() => {
@@ -132,14 +139,13 @@ export default function LoginScreen() {
     }
   };
 
-  const goToSignup = () => {
-    router.push('/auth/signup');
-  }
+  const goToSignup = () => router.push('/auth/signup');
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>Sign In</Text>
+
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -172,19 +178,25 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Divider Line with "or" */}
+        {/* Divider */}
         <View style={styles.dividerContainer}>
           <View style={styles.line} />
           <Text style={styles.orText}>or</Text>
           <View style={styles.line} />
         </View>
 
+        {/* Social Logins */}
         <View style={styles.socialContainer}>
           <TouchableOpacity style={styles.socialBtn} onPress={() => promptGoogle()}>
             <AntDesign name="google" size={22} color="#000" />
             <Text style={styles.socialText}>Google</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.socialBtn} onPress={() => fbPromptAsync()}>
+          <TouchableOpacity
+            style={styles.socialBtn}
+            onPress={async () => {
+              await fbPromptAsync(); // ensures Expo Go handles redirect correctly
+            }}
+          >
             <FontAwesome name="facebook" size={22} color="#000" />
             <Text style={styles.socialText}>Facebook</Text>
           </TouchableOpacity>
