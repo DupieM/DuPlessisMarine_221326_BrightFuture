@@ -13,7 +13,7 @@
 <p align="center">
 
   <a href="https://github.com/username/projectname">
-    <img src="readme_images/" alt="Logo" width="130" height="130">
+    <img src="readme_images/Icon.png" alt="Logo" width="130" height="130">
   </a>
   
   <h3 align="center">BrightFuture</h3>
@@ -63,7 +63,7 @@
 <!--PROJECT DESCRIPTION-->
 ## About the Project
 <!-- header image of project -->
-<img src="readme_images/" alt="header image" width="550px">
+<img src="readme_images/header image.png" alt="header image" width="550px">
 
 ### Project Description
 
@@ -132,7 +132,7 @@ To start the Expo app on a phone:
 <!-- You can add the links to all of your imagery at the bottom of the file as references -->
 ## Features and Functionality
 
-![Authentication]()
+![Authentication](readme_images/Authentication.png)
 
 ### Authentication Screens
 
@@ -140,7 +140,15 @@ This Screen allows users to be able to sign up and then sign in.
 
 </br>
 
-![Home]()
+![Onboarding](readme_images/Onboarding.png)
+
+### Onoarding Screens
+
+These screens shows the user what they can do within the app.
+
+</br>
+
+![Home](readme_images/Home.png)
 
 ### Home Screen
 
@@ -148,31 +156,32 @@ This screen welcomes users to BrightFuture, it shows the user how much money is 
 
 </br>
 
-![Donations]()
+![Donations](readme_images/Donations.png)
+![Donations](readme_images/Donations2.png)
 
 ### Donations Screens
 
 Donations will give the user an option to select a category for which he wants to donate for. Once a category is selected the user will choose either to buy items for that category from a retailer as to deliver it to the SA Children’s Home or they can choose to donate money from SnapScan. If they choose to donate they will be linked through to the retailer website to order and request delivery of the goods.
 
-![Rewards]()
+![Rewards](readme_images/Rewards.png)
 
 ### Rewards Screen
 
 This screens allows user to view which badges they have collected and also what the next badge is that they should aim for. This screen also shows a quote for the user. 
 
-![Volunteer]()
+![Volunteer](readme_images/Volunteer.png)
 
 ### Volunteer Screens
 
 This screens allows users to view different volunteer opportunities to sign up for, it will allow the user to select which type of volunteering they want to do and then to provide their details and then submit it to SA Children’s Home.
 
-![Payment]()
+![Payment](readme_images/Payment.png)
 
 ### Payment Screen
 
 This screen enables the user to scan the QR code for SnapScan that will allow the user to pay an amount to help SA Children's Home. There is also an option to enable the QR code by clicking on the button.
 
-![Profile]()
+![Profile](readme_images/Profile.png)
 
 ### Profile Screen
 
@@ -186,19 +195,19 @@ The `Conceptual Process` is the set of actions, activities and research that was
 
 ### Ideation
 
-<img src="readme_images/" alt="Moodboard1" width="1000px">
+<img src="readme_images/moodboard.jpg" alt="Moodboard1" width="1000px">
 
 ### Planned Wireframes
 
-<img src="readme_images/" alt="Wireframe 1" width="700px">
+<img src="readme_images/Wireframe_one.png" alt="Wireframe 1" width="700px">
 </br>
-<img src="readme_images/" alt="Wireframe 2" width="700px">
+<img src="readme_images/Wireframe_two.png" alt="Wireframe 2" width="700px">
 </br>
-<img src="readme_images/" alt="Wireframe 3" width="700px">
+<img src="readme_images/Wireframe_three.png" alt="Wireframe 3" width="700px">
 
 ### Badge Designs
 
-<img src="readme_images/" alt="Wireframe 4" width="700px">
+<img src="readme_images/Wireframe_four.png" alt="Wireframe 4" width="700px">
 
 <!-- DEVELOPMENT PROCESS -->
 
@@ -253,19 +262,16 @@ The `Development Process` is the technical implementations and functionality don
 
 ### Mockups
 
-![Mockup 1](readme_images/)
+![Mockup 1](readme_images/Mockup1.png)
 <br>
 
-![Mockup 2](readme_images/)
+![Mockup 2](readme_images/Mockup2.png)
 <br>
 
-![Mockup 3](readme_images/)
+![Mockup 3](readme_images/Mockup3.png)
 <br>
 
-![Mockup 4](readme_images/)
-<br>
-
-![Mockup 5](readme_images/)
+![Mockup 4](readme_images/Mockup4.png)
 <br>
 
 <!-- VIDEO DEMONSTRATION -->
@@ -273,11 +279,11 @@ The `Development Process` is the technical implementations and functionality don
 
 To see a run through of the application, click below:
 
-[View Demonstration]()
+[View Demonstration](https://drive.google.com/file/d/1P5y8AUyFJjOmjTWRkJBueP5vuU6uC3jg/view?usp=sharing)
 
 ### Promotional Video
 
-[Promo Video]()
+[Promo Video](https://drive.google.com/file/d/10i0YRZQaaht4D8HTYm3IRY_rlCrPiIHe/view?usp=sharing)
 
 <!-- ROADMAP -->
 ## Roadmap
