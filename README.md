@@ -142,7 +142,7 @@ This Screen allows users to be able to sign up and then sign in.
 
 ![Onboarding](readme_images/Onboarding.png)
 
-### Onoarding Screens
+### Onboarding Screens
 
 These screens shows the user what they can do within the app.
 
@@ -163,7 +163,7 @@ This screen welcomes users to BrightFuture, it shows the user how much money is 
 
 Donations will give the user an option to select a category for which he wants to donate for. Once a category is selected the user will choose either to buy items for that category from a retailer as to deliver it to the SA Children’s Home or they can choose to donate money from SnapScan. If they choose to donate they will be linked through to the retailer website to order and request delivery of the goods.
 
-![Rewards](readme_images/Rewards.png)
+<img src="readme_images/Rewards.png" alt="journey" width="350px">
 
 ### Rewards Screen
 
@@ -175,13 +175,13 @@ This screens allows user to view which badges they have collected and also what 
 
 This screens allows users to view different volunteer opportunities to sign up for, it will allow the user to select which type of volunteering they want to do and then to provide their details and then submit it to SA Children’s Home.
 
-![Payment](readme_images/Payment.png)
+<img src="readme_images/Payment.png" alt="journey" width="350px">
 
 ### Payment Screen
 
 This screen enables the user to scan the QR code for SnapScan that will allow the user to pay an amount to help SA Children's Home. There is also an option to enable the QR code by clicking on the button.
 
-![Profile](readme_images/Profile.png)
+<img src="readme_images/Profile.png" alt="journey" width="350px">
 
 ### Profile Screen
 
